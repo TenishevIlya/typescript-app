@@ -18,11 +18,7 @@ const ProfileLyaoutStyles = {
     paddingLeft: "1.75%",
     paddingRight: "1.61%"
   }),
-  headerMenuLogo: style({
-    marginLeft: "1.75%",
-    marginRight: "1.17%"
-  }),
-  headerMenuTitle: {
+  headerMenuTitle: style({
     fontFamily: "'Open Sans', sans-serif",
     fontStyle: "normal",
     fontWeight: "bold",
@@ -30,7 +26,16 @@ const ProfileLyaoutStyles = {
     lineHeight: "19px",
     alignItems: "center",
     color: "#6879BB"
-  }
+  }),
+  headerSideMenuTitle: style({
+    fontFamily: "'Open Sans', sans-serif",
+    fontStyle: "normal",
+    fontWeight: "bold",
+    fontSize: "14px",
+    lineHeight: "19px",
+    alignItems: "center",
+    color: "white"
+  })
 };
 
 export default ProfileLyaoutStyles;

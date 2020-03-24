@@ -1,27 +1,73 @@
-import React, { useState } from "react";
-import Input from "../../components/InputComponent/Input";
-import InputStyles from "../../components/InputComponent/index.style";
-import { Link } from "react-router-dom";
+import React, { useState, Fragment } from "react";
+import { Dispatch } from "redux";
+import { MapStateToProps, MapDispatchToProps, connect } from "react-redux";
+import { reduxForm } from "redux-form";
+
+/* Components */
+import InputField from "../../components/InputComponent/Input";
 import Button from "../../components/ButtonComponent/Button";
-import LinkStyles from "./index.style";
+import { Link } from "react-router-dom";
 
-interface ILogIn {}
+/* styles */
+import InputStyles from "../../components/InputComponent/Input.style";
+import LinkStyles from "./LogIn.style";
 
-const LogIn: React.FC<ILogIn> = props => {
+/* Interfaces */
+import ILogInProps from "./Login.interface";
+
+/* App store */
+import store from "../../store/index.store";
+import { CHANGE_INPUT, CLICK_BTN } from "../../store/actions/actions";
+
+/* Validators */
+import formLenght from "../../validators/validators";
+
+import { withMutation } from "@apollo/react-hoc";
+import loginMutation from "../../mutations/loginMutation";
+
+const LogIn: React.FC<ILogInProps> = props => {
   return (
-    <div>
-      <Input
+    <form>
+      <InputField
+        name="loginField"
         placeholder="Электронная почта"
         type="text"
-        className={InputStyles}
+        validate={[formLenght]}
       />
-      <Input placeholder="Пароль" type="password" className={InputStyles} />
+      <InputField
+        name="passwordField"
+        placeholder="Пароль"
+        type="password"
+        validate={[formLenght]}
+      />
       <Button title="Войти в систему" />
       <Link className={LinkStyles} to="/registration">
         Зарегистрироваться
       </Link>
-    </div>
+    </form>
   );
 };
 
-export default LogIn;
+const connectedForm = reduxForm({
+  form: "q"
+  //validate: formLength
+})(LogIn);
+
+const mapStateToProps = (state: any) => {
+  const { form, ...rest } = state;
+  return { ...rest };
+};
+
+const mapDispacthToProps = (dispatch: Dispatch) => {
+  return {
+    dispatchin() {
+      dispatch({ type: "CLICK_BTN" });
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispacthToProps)(connectedForm);
+
+//export default withMutation(loginMutation)(connectedForm(LogIn));
+
+//export default connectedForm(LogIn);

@@ -1,10 +1,15 @@
 import React, { useState } from "react";
+
+/* Img */
 import Logo from "../../img/proceset_logo.svg";
-import UnAuthorizedLayoutStyles from "./index.style";
+
+/* Styles */
+import UnAuthorizedLayoutStyles from "./UnAuthorized.style";
+
+/* Interfaces */
+import IUnAuthorizedLayoutProps from "./UnAuthorized.interface";
 
 const { layoutBackground, logo, formContainer } = UnAuthorizedLayoutStyles;
-
-interface IUnAuthorizedLayoutProps {}
 
 const UnAuthorizedLayout: React.FC<IUnAuthorizedLayoutProps> = ({
   children

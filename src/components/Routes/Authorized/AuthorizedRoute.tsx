@@ -1,17 +1,15 @@
 import React from "react";
 import { Route, useLocation } from "react-router-dom";
-import ProfileLayout from "../../layouts/Profile/Profile";
 
-interface IAuthorizedRoute {
-  path: string;
-}
+/* Interface */
+import IAuthorizedRoute from "./AuthorizedRoute.interface";
 
 const AuthorizedRoute: React.FC<IAuthorizedRoute> = () => {
   const location = useLocation();
 
   console.log(location.pathname);
 
-  return <Route exact component={ProfileLayout}></Route>;
+  return <Route exact={true}></Route>;
 };
 
 export default AuthorizedRoute;

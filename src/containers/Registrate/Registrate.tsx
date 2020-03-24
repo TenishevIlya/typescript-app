@@ -1,44 +1,58 @@
 import React from "react";
-import Input from "../../components/InputComponent/Input";
-import Button from "../../components/ButtonComponent/Button";
-import InputStyles from "../../components/InputComponent/index.style";
-import Header from "../../components/HeaderComponent/Header";
-import { Link } from "react-router-dom";
-import LinkStyles from "../LogIn/index.style";
-import HeaderStyles from "../../components/HeaderComponent/index.style";
 import classNames from "classnames";
 
-interface IRegistrateProps {}
+/* Components */
+import Input from "../../components/InputComponent/Input";
+import Button from "../../components/ButtonComponent/Button";
+import Header from "../../components/HeaderComponent/Header";
+import { Link } from "react-router-dom";
+
+/* Styles */
+import InputStyles from "../../components/InputComponent/Input.style";
+import LinkStyles from "../LogIn/LogIn.style";
+import HeaderStyles from "../../components/HeaderComponent/Header.style";
+
+/* Validators */
+import formLength from "../../validators/validators";
+
+/* Interfaces */
+import IRegistrateProps from "./Registrate.inteface";
+import { reduxForm } from "redux-form";
 
 const Registrate: React.FC<IRegistrateProps> = props => {
   const { common, registrateHeader } = HeaderStyles;
   const CurrentHeaderStyle = classNames(common, registrateHeader);
   return (
-    <div>
+    <form>
       <Header title="Регистрация" className={CurrentHeaderStyle} />
-      <Input placeholder="Имя" type="text" className={InputStyles} />
-      <Input placeholder="Фамилия" type="text" className={InputStyles} />
       <Input
+        name="firstNameInput"
+        placeholder="Имя"
+        type="text"
+        validate={[formLength]}
+      />
+      <Input name="secondNameInput" placeholder="Фамилия" type="text" />
+      <Input
+        name="registrateEmail"
         placeholder="Электронная почта"
         type="text"
-        className={InputStyles}
       />
       <Input
+        name="registratePassword"
         placeholder="Введите пароль"
         type="password"
-        className={InputStyles}
       />
       <Input
+        name="registratePasswordAgain"
         placeholder="Повторите пароль"
         type="password"
-        className={InputStyles}
       />
       <Button title="Применить и войти" />
       <Link to="/" className={LinkStyles}>
         Уже зарегистрированны? Вход
       </Link>
-    </div>
+    </form>
   );
 };
 
-export default Registrate;
+export default reduxForm({ form: "proof" })(Registrate);

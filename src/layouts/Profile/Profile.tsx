@@ -1,22 +1,49 @@
 import React, { useState } from "react";
-import ProfileLayoutStyles from "./index.style";
-import MenuLogo from "../../img/menu.svg";
-import Header from "../../components/HeaderComponent/Header";
+import classNames from "classnames";
 
-interface IProfileLayoutProps {}
+/* Components */
+import Header from "../../components/HeaderComponent/Header";
+import Sidebar from "../../containers/SidebarComponent/Sidebar";
+import MenuHeader from "../../components/MenuHeader/MenuHeader";
+
+/* Img */
+import MenuLogo from "../../img/menu.svg";
+
+/* Styles */
+import ProfileLayoutStyles from "./Profile.style";
+
+/* Interfaces */
+import IProfileLayoutProps from "./Profile.inteface";
+import Menu from "../../containers/Menu/Menu";
 
 const ProfileLayout: React.FC<IProfileLayoutProps> = ({ children }) => {
-  const { header, main, headerMenuLogo } = ProfileLayoutStyles;
-  //   const { common, registrateHeader } = HeaderStyles;
-  //   const CurrentHeaderStyle = classNames(common, registrateHeader);
+  const [sidebarState, setSidebarState] = useState(false);
+
+  const {
+    header,
+    main,
+    headerMenuTitle,
+    headerSideMenuTitle
+  } = ProfileLayoutStyles;
+  //const CurrentHeaderStyle = classNames(headerMenuTitle);
+
+  //console.log(sidebarState);
+  console.log(sidebarState);
 
   return (
     <div>
+      {sidebarState ? (
+        <Sidebar action={() => setSidebarState(!sidebarState)} />
+      ) : null}
       <div className={header}>
-        <img src={MenuLogo} className={headerMenuLogo} />
-        <Header title="Меню" />
+        <MenuHeader
+          icon={MenuLogo}
+          currentTitleClass={headerMenuTitle}
+          action={() => setSidebarState(!sidebarState)}
+          title="Menu"
+        />
       </div>
-      <div className={main}></div>
+      <div className={main}>{children}</div>
     </div>
   );
 };

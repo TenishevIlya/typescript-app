@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 
-interface IHeaderProps {
-  title: string;
-  className: string;
-}
+/* Interface */
+import IHeaderProps from "./Header.interface";
 
 const Header: React.FC<IHeaderProps> = props => {
   const [headerTitle, setHeaderTitle] = useState("");

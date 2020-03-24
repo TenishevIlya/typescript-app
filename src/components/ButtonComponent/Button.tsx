@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import ButtonStyles from "./index.style";
 import classNames from "classnames";
 
-interface IButton {
-  title: string;
-}
+/* Styles */
+import ButtonStyles from "./Button.style";
+
+/* Interfaces */
+import IButton from "./Button.interface";
 
 const Button: React.FC<IButton> = props => {
   const [aсcsess, setAccess] = useState("active");
