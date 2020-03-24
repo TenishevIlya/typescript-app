@@ -23,6 +23,8 @@ const client = new ApolloClient({
   }
 });
 
+localStorage.clear();
+
 // client.query({
 //   query: gql`
 //     query {
@@ -34,6 +36,8 @@ const client = new ApolloClient({
 //   `
 // });
 
+console.log(localStorage);
+
 interface IApp {}
 
 const App: React.FC<IApp> = () => {
@@ -42,13 +46,16 @@ const App: React.FC<IApp> = () => {
       <Provider store={store}>
         <BrowserRouter>
           <Switch>
-            <UnAuthorizedLayout>
-              <UnAuthorizedRoute path="/" />
-              <UnAuthorizedRoute path="/registration" />
-            </UnAuthorizedLayout>
-            <AuthorizedLayout>
-              <AuthorizedRoute path="/profile" />
-            </AuthorizedLayout>
+            {localStorage.length === 0 ? (
+              <UnAuthorizedLayout>
+                <UnAuthorizedRoute path="/" />
+                <UnAuthorizedRoute path="/registration" />
+              </UnAuthorizedLayout>
+            ) : (
+              <AuthorizedLayout>
+                <AuthorizedRoute path="/profile" />
+              </AuthorizedLayout>
+            )}
           </Switch>
         </BrowserRouter>
       </Provider>

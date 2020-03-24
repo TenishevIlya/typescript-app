@@ -2,7 +2,7 @@ import React from "react";
 import classNames from "classnames";
 
 /* Components */
-import Input from "../../components/InputComponent/Input";
+import InputField from "../../components/InputComponent/Input";
 import Button from "../../components/ButtonComponent/Button";
 import Header from "../../components/HeaderComponent/Header";
 import { Link } from "react-router-dom";
@@ -13,7 +13,7 @@ import LinkStyles from "../LogIn/LogIn.style";
 import HeaderStyles from "../../components/HeaderComponent/Header.style";
 
 /* Validators */
-import formLength from "../../validators/validators";
+import { inputLength, isEmailCorrect } from "../../validators/validators";
 
 /* Interfaces */
 import IRegistrateProps from "./Registrate.inteface";
@@ -21,31 +21,47 @@ import { reduxForm } from "redux-form";
 
 const Registrate: React.FC<IRegistrateProps> = props => {
   const { common, registrateHeader } = HeaderStyles;
+  const { InputFieldStyle } = InputStyles;
   const CurrentHeaderStyle = classNames(common, registrateHeader);
+  const validateInputLength = inputLength(7);
+
   return (
     <form>
       <Header title="Регистрация" className={CurrentHeaderStyle} />
-      <Input
+      <InputField
         name="firstNameInput"
         placeholder="Имя"
         type="text"
-        validate={[formLength]}
+        className={InputFieldStyle}
+        validate={[validateInputLength]}
       />
-      <Input name="secondNameInput" placeholder="Фамилия" type="text" />
-      <Input
+      <InputField
+        name="secondNameInput"
+        className={InputFieldStyle}
+        placeholder="Фамилия"
+        type="text"
+        validate={[validateInputLength]}
+      />
+      <InputField
+        className={InputFieldStyle}
         name="registrateEmail"
         placeholder="Электронная почта"
         type="text"
+        validate={[isEmailCorrect]}
       />
-      <Input
+      <InputField
+        className={InputFieldStyle}
         name="registratePassword"
         placeholder="Введите пароль"
         type="password"
+        validate={[validateInputLength]}
       />
-      <Input
+      <InputField
+        className={InputFieldStyle}
         name="registratePasswordAgain"
         placeholder="Повторите пароль"
         type="password"
+        validate={[validateInputLength]}
       />
       <Button title="Применить и войти" />
       <Link to="/" className={LinkStyles}>

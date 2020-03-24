@@ -13,9 +13,9 @@ import ProfileLayoutStyles from "../../layouts/Profile/Profile.style";
 import MenuHeaderStyles from "../../components/MenuHeader/MenuHeader.style";
 
 /* Interfaces */
-import ISidebarProps from "../SidebarComponent/Sidebar.interface";
+import ISidebarState from "../SidebarComponent/Sidebar.interface";
 
-const Sidebar: React.FC<ISidebarProps> = props => {
+const Sidebar: React.FC<ISidebarState> = props => {
   const { common, unUsePart, menuPart } = SidebarStyles;
   const { headerSideMenuTitle, headerMenuTitle } = ProfileLayoutStyles;
   const { sidebarMenuHeader } = MenuHeaderStyles;

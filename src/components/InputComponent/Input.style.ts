@@ -1,7 +1,7 @@
 import { style } from "typestyle";
 
 const InputStyles = {
-  InputField: style({
+  InputFieldStyle: style({
     background: "#FFFFFF",
     border: "1px solid #D6DCE9",
     boxSizing: "border-box",
@@ -41,7 +41,7 @@ const InputStyles = {
   }),
   InputTextLabel: style({
     display: "block",
-    height: "55px"
+    height: "52px"
   })
 };
 

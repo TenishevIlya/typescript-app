@@ -1,5 +1,5 @@
-interface ISidebarProps {
-  action?(): any;
+interface ISidebarState {
+  action?(): void;
 }
 
-export default ISidebarProps;
+export default ISidebarState;

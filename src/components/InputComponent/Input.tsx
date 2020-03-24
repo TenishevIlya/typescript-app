@@ -16,72 +16,59 @@ import classNames from "classnames";
 
 const Input: React.FC<IInputProps> = props => {
   const [visibility, setVisibility] = useState(false);
-  const [value, setValue] = useState("");
 
   const {
-    InputField,
     InputPasswordLabel,
     InputErrorField,
     InputErrorMessage,
     InputTextLabel
   } = InputStyles;
 
-  const ErrorInputStyle = classNames(InputField, InputErrorField); // in order to have string values
-  const InputStyle = classNames(InputField); // in order to have string values
-
   const {
     input,
-    meta: { error, invalid }
+    meta: { error, invalid, touched },
+    className
   } = props;
 
-  const currentClass = invalid ? ErrorInputStyle : InputStyle;
+  const ErrorInputStyle = classNames(className, InputErrorField); // in order to have string values
+  const InputStyle = classNames(className); // in order to have string values
+
+  const currentClass = touched & invalid ? ErrorInputStyle : InputStyle;
 
   if (props.type === "password") {
-    if (visibility) {
-      return (
-        <label className={InputPasswordLabel}>
+    return (
+      <label className={InputTextLabel}>
+        <div className={InputPasswordLabel}>
           <input
-            type="text"
+            type={visibility ? "text" : "password"}
             placeholder={props.placeholder}
-            className={InputField}
             {...input}
+            className={`${currentClass}`}
           />
-          <img
-            src={VisibleEye}
+          <img // think about component
+            src={visibility ? VisibleEye : InVisibleEye}
             className={HideOrShowStyles}
             onClick={() => setVisibility(!visibility)}
           />
-        </label>
-      );
-    } else {
-      return (
-        <label className={InputPasswordLabel}>
-          <input
-            type="password"
-            placeholder={props.placeholder}
-            className={InputField}
-            {...input}
-          />
-          <img
-            src={InVisibleEye}
-            className={HideOrShowStyles}
-            onClick={() => setVisibility(!visibility)}
-          />
-        </label>
-      );
-    }
+        </div>
+        {touched & invalid ? (
+          <span className={InputErrorMessage}>{error}</span>
+        ) : null}
+      </label>
+    );
   }
 
   return (
     <label className={InputTextLabel}>
       <input
-        onChange={() => console.log(input.value)}
         type={props.type}
         placeholder={props.placeholder}
         {...input}
         className={`${currentClass}`}
       />
-      {invalid ? <span className={InputErrorMessage}>{error}</span> : null}
+      {touched & invalid ? (
+        <span className={InputErrorMessage}>{error}</span>
+      ) : null}
     </label>
   );
 };
@@ -93,7 +80,7 @@ interface IInputField extends Partial<WrappedFieldProps> {
 }
 
 const InputField: React.FC<IInputField & BaseFieldProps> = props => {
-  return <Field name="field" component={Input} {...props} />;
+  return <Field name={props.name} component={Input} {...props} />;
 };
 
 export default InputField;
