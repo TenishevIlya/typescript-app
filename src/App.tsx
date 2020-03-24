@@ -23,8 +23,6 @@ const client = new ApolloClient({
   }
 });
 
-localStorage.clear();
-
 // client.query({
 //   query: gql`
 //     query {
@@ -35,8 +33,6 @@ localStorage.clear();
 //     }
 //   `
 // });
-
-console.log(localStorage);
 
 interface IApp {}
 

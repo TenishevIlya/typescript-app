@@ -12,11 +12,7 @@ const Button: React.FC<IButton> = props => {
   const { commonStyles, bigBtn } = ButtonStyles;
   const btnStyles = classNames(commonStyles, bigBtn);
 
-  return (
-    <button disabled className={btnStyles}>
-      {props.title}
-    </button>
-  );
+  return <button className={btnStyles}>{props.title}</button>;
 };
 
 export default Button;

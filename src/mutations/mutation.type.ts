@@ -3,7 +3,7 @@ export interface LogInMutatonProps<> {
   password: string;
 }
 
-export interface LogIn<User> {
+export interface LogInMutation<User> {
   user: User;
   token: string;
 }

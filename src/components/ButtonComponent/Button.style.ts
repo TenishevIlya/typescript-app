@@ -11,7 +11,8 @@ const ButtonStyles = {
     lineHeight: "16px",
     textAlign: "center",
     color: "#333333",
-    border: "none"
+    border: "none",
+    cursor: "pointer"
   }),
   bigBtn: style({
     height: "36px",
