@@ -40,8 +40,8 @@ const InputStyles = {
     outline: "none"
   }),
   InputTextLabel: style({
-    display: "block",
-    height: "52px"
+    display: "block"
+    //height: "52px"
   })
 };
 

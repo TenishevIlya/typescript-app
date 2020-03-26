@@ -1,4 +1,4 @@
 export default interface ILogInProps {
-  //   loginField: string;
-  //   passwordField: string;
+  loginEmail: string;
+  loginPassword: string;
 }

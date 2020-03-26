@@ -1,5 +1,13 @@
 const errors: any = {};
 
+export const formOnSubmitValidator = (fields: any) => {
+  if (fields.loginPassword === undefined || fields.loginEmail === undefined) {
+    return "Есть незаполненные поля";
+  } else {
+    return null;
+  }
+};
+
 export const isEmailCorrect = (value: string) => {
   if (
     value?.match(/^[0-9a-z-\.]+\@[0-9a-z-]{2,}\.[a-z]{2,}$/i) &&
@@ -15,11 +23,6 @@ export const inputLength = (len: number) => (value: string) => {
   return value?.length < len
     ? `Поле должно содержать ${len} и более символов`
     : null;
-  // if (value?.length < len) {
-  //   return `Поле должно содержать ${len} и более символов`;
-  // } else {
-  //   return null;
-  // }
 };
 
 //export default formLenght;

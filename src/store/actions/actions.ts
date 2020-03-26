@@ -1,6 +1,6 @@
-export const CHANGE_INPUT = (value: string) => {
+export const GET_TOKEN = (value: string) => {
   return {
-    type: "CHANGE_INPUT",
+    type: "GET_TOKEN",
     payload: value
   };
 };

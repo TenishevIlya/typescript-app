@@ -4,8 +4,10 @@ export interface LogInMutatonProps<> {
 }
 
 export interface LogInMutation<User> {
-  user: User;
-  token: string;
+  login: {
+    user: User;
+    token: string;
+  };
 }
 
 export interface User {

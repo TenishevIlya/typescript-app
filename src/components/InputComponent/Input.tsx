@@ -77,6 +77,7 @@ interface IInputField extends Partial<WrappedFieldProps> {
   placeholder?: string;
   type?: "text" | "password";
   className?: Object;
+  btnHandler?(): any;
 }
 
 const InputField: React.FC<IInputField & BaseFieldProps> = props => {
