@@ -16,3 +16,19 @@ export interface User {
   secondName: string;
   email: string;
 }
+
+export interface SignUpMutation {
+  signUp: {
+    firstName: string;
+    secondName: string;
+    email: string;
+    password: string;
+  };
+}
+
+export interface SignUpValues {
+  firstName: string;
+  secondName: string;
+  email: string;
+  password: string;
+}

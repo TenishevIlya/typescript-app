@@ -4,4 +4,6 @@ export default interface IInputProps {
   type?: string;
   input?: any;
   meta?: any;
+  bntHandler?(): any;
+  passwordHandler?(e: any): any;
 }

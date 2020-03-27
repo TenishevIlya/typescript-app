@@ -3,11 +3,12 @@ export type TAction = {
   payload?: any;
 };
 
-export const getReducer = (state: string = "", action: TAction) => {
+// can't find a better way to set initial state at the beginning
+export const getInitialValue = (state: any = "some state", action: TAction) => {
   switch (action.type) {
     default:
       return state;
-    case "GET_TOKEN":
+    case "CHANGE_INITIAL_VALUE":
       return action.payload;
   }
 };

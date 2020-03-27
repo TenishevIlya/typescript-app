@@ -1,5 +1,5 @@
 import React, { useState, Fragment } from "react";
-import { Field } from "redux-form";
+import { Field, change } from "redux-form";
 import { BaseFieldProps, WrappedFieldProps } from "redux-form";
 
 /* Img */
@@ -16,6 +16,15 @@ import classNames from "classnames";
 
 const Input: React.FC<IInputProps> = props => {
   const [visibility, setVisibility] = useState(false);
+  const [isUnActivePassword, setUnActivePassword] = useState(false);
+
+  const changeVisibility = () => {
+    setVisibility(!visibility);
+  };
+
+  const handlePasswordActivity = () => {
+    setUnActivePassword(!isUnActivePassword);
+  };
 
   const {
     InputPasswordLabel,
@@ -26,14 +35,15 @@ const Input: React.FC<IInputProps> = props => {
 
   const {
     input,
-    meta: { error, invalid, touched },
+    meta: { error, invalid, touched, active },
     className
   } = props;
 
   const ErrorInputStyle = classNames(className, InputErrorField); // in order to have string values
   const InputStyle = classNames(className); // in order to have string values
 
-  const currentClass = touched & invalid ? ErrorInputStyle : InputStyle;
+  const currentPasswordClass = active & invalid ? ErrorInputStyle : InputStyle;
+  const currentInputClass = touched & invalid ? ErrorInputStyle : InputStyle;
 
   if (props.type === "password") {
     return (
@@ -43,15 +53,16 @@ const Input: React.FC<IInputProps> = props => {
             type={visibility ? "text" : "password"}
             placeholder={props.placeholder}
             {...input}
-            className={`${currentClass}`}
+            className={`${currentPasswordClass}`}
+            onBlur={props.passwordHandler}
           />
           <img // think about component
             src={visibility ? VisibleEye : InVisibleEye}
             className={HideOrShowStyles}
-            onClick={() => setVisibility(!visibility)}
+            onClick={changeVisibility}
           />
         </div>
-        {touched & invalid ? (
+        {active & invalid ? (
           <span className={InputErrorMessage}>{error}</span>
         ) : null}
       </label>
@@ -64,7 +75,7 @@ const Input: React.FC<IInputProps> = props => {
         type={props.type}
         placeholder={props.placeholder}
         {...input}
-        className={`${currentClass}`}
+        className={`${currentInputClass}`}
       />
       {touched & invalid ? (
         <span className={InputErrorMessage}>{error}</span>
@@ -78,6 +89,7 @@ interface IInputField extends Partial<WrappedFieldProps> {
   type?: "text" | "password";
   className?: Object;
   btnHandler?(): any;
+  passwordHandler?(e: any): any;
 }
 
 const InputField: React.FC<IInputField & BaseFieldProps> = props => {

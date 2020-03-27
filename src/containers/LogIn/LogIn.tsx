@@ -1,7 +1,6 @@
-import React, { useState, Fragment } from "react";
-import { Dispatch } from "redux";
-import { MapStateToProps, MapDispatchToProps, connect } from "react-redux";
-import { reduxForm, formValueSelector } from "redux-form";
+import React, { useState } from "react";
+import { connect } from "react-redux";
+import { reduxForm } from "redux-form";
 import { useHistory } from "react-router-dom";
 //import classNames from "classnames";
 
@@ -29,14 +28,14 @@ import store from "../../store/index.store";
 /* Validators */
 import {
   isEmailCorrect,
-  formOnSubmitValidator
+  loginFormOnSubmitValidator
 } from "../../validators/validators";
 
 /* Apollo */
 import { useMutation } from "@apollo/react-hooks";
 import loginMutation from "../../mutations/loginMutation";
 
-const LogIn = (props: any, fields: any) => {
+const LogIn = (props: any) => {
   const [isAnyErrors, setError] = useState("");
   const [isBtnDisabled, setDisable] = useState(false);
 
@@ -45,8 +44,22 @@ const LogIn = (props: any, fields: any) => {
 
   const { handleSubmit } = props;
 
+  console.log(props?.loginForm?.syncErrors);
+
+  // const handleBtnDisable = () => {
+  //   if (props?.loginForm?.syncErrors !== undefined) {
+  //     console.log("disbled");
+  //     setDisable(true);
+  //   } else {
+  //     console.log("not disabled");
+  //     setDisable(false);
+  //   }
+  // };
+
+  //console.log(store.getState().form.loginForm);
+
   const logInOnSubmit = (fields: any) => {
-    if (formOnSubmitValidator(fields) !== null) {
+    if (loginFormOnSubmitValidator(fields) !== null) {
       setError("Есть незаполненные поля");
     } else {
       setError("");
@@ -88,7 +101,9 @@ const LogIn = (props: any, fields: any) => {
           placeholder="Электронная почта"
           type="text"
           className={InputFieldStyle}
+          //validate={handleBtnDisable}
           validate={[isEmailCorrect]}
+          // btnHandler={handleBtnDisable}
         />
         <InputField
           name="loginPassword"
@@ -96,7 +111,7 @@ const LogIn = (props: any, fields: any) => {
           type="password"
           className={InputFieldStyle}
         />
-        <Button title="Войти в систему" />
+        <Button title="Войти в систему" disable={isBtnDisabled} />
         <Link className={LinkStyles} to="/registration">
           Зарегистрироваться
         </Link>
@@ -111,14 +126,8 @@ const connectedForm = reduxForm<ILogInProps>({
 })(LogIn);
 
 const mapStateToProps = (state: any) => {
-  const { form, ...rest } = state;
-  // return { ...rest };
+  const { form } = state;
   return form;
 };
-
-// const mapStateToProps = (state: any) => {
-//   const selector = formValueSelector("q");
-//   return selector(state, "loginEmail", "loginPassword");
-// };
 
 export default connect(mapStateToProps)(connectedForm);

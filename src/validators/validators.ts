@@ -1,7 +1,22 @@
 const errors: any = {};
 
-export const formOnSubmitValidator = (fields: any) => {
+export const loginFormOnSubmitValidator = (fields: any) => {
   if (fields.loginPassword === undefined || fields.loginEmail === undefined) {
+    return "Есть незаполненные поля";
+  } else {
+    return null;
+  }
+};
+
+export const registrateFormOnSubmitValidator = (fields: any) => {
+  if (
+    fields.registrateName === undefined ||
+    fields.registrateSecondName === undefined ||
+    fields.registrateEmail === undefined ||
+    fields.registratePassword === undefined ||
+    fields.registratePasswordRepeat === undefined
+  ) {
+    console.log("Есть незаполненные поля");
     return "Есть незаполненные поля";
   } else {
     return null;
@@ -25,4 +40,13 @@ export const inputLength = (len: number) => (value: string) => {
     : null;
 };
 
-//export default formLenght;
+export const comparePasswords = (initialValue: string) => (
+  currentValue: string
+) => {
+  if (initialValue !== currentValue) {
+    return "Пароли не совпадают";
+  } else {
+    console.log("success");
+    return null;
+  }
+};
