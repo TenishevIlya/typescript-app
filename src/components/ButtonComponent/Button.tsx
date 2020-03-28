@@ -1,18 +1,17 @@
 import React, { useState } from "react";
 import classNames from "classnames";
 
-/* Styles */
-import ButtonStyles from "./Button.style";
-
 /* Interfaces */
 import IButton from "./Button.interface";
 
 const Button: React.FC<IButton> = props => {
   const [aсcsess, setAccess] = useState("active");
-  const { commonStyles, bigBtn } = ButtonStyles;
-  const btnStyles = classNames(commonStyles, bigBtn);
 
-  return <button className={btnStyles}>{props.title}</button>;
+  return (
+    <button type={props.type} form={props.form} className={props.className}>
+      {props.title}
+    </button>
+  );
 };
 
 export default Button;

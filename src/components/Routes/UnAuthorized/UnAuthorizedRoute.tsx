@@ -10,7 +10,7 @@ import IUnAuthorizedRoute from "./UnAuthorizedRoute.interface";
 
 const UnAuthorizedRoute: React.FC<IUnAuthorizedRoute> = props => {
   const location = useLocation();
-  console.error(location);
+
   return (
     <Route path={props.path} exact={true}>
       {location.pathname === "/" ? <LogIn /> : <Registrate />}

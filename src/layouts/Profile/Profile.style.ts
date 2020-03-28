@@ -4,9 +4,9 @@ const ProfileLyaoutStyles = {
   header: style({
     width: "100%",
     height: "8vh",
-    /* height: 60px; */
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
+    boxShadow: "0px 1px 10px rgba(104, 121, 187, 0.1)"
   }),
   main: style({
     background: "#EBF2FB",

@@ -9,6 +9,8 @@ import UnAuthorizedLayoutStyles from "./UnAuthorized.style";
 /* Interfaces */
 import IUnAuthorizedLayoutProps from "./UnAuthorized.interface";
 
+console.log(localStorage);
+
 const { layoutBackground, logo, formContainer } = UnAuthorizedLayoutStyles;
 
 const UnAuthorizedLayout: React.FC<IUnAuthorizedLayoutProps> = ({

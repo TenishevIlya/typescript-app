@@ -12,3 +12,15 @@ export const getInitialValue = (state: any = "some state", action: TAction) => {
       return action.payload;
   }
 };
+
+export const setProfileLayout = (
+  state: any = "SHOW_EDIT_PROFILE",
+  action: TAction
+) => {
+  switch (action.type) {
+    default:
+      return state;
+    case "CHANGE_PROFILE_CHILDREN":
+      return action.payload;
+  }
+};

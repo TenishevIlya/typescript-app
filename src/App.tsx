@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React, { Component, useState, useEffect } from "react";
 import "./index.css";
-import { BrowserRouter, Switch } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
 import UnAuthorizedRoute from "./components/Routes/UnAuthorized/UnAuthorizedRoute";
 import AuthorizedRoute from "./components/Routes/Authorized/AuthorizedRoute";
 import UnAuthorizedLayout from "./layouts/UnAuthorized/UnAuthorized";
@@ -8,7 +8,12 @@ import AuthorizedLayout from "./layouts/Profile/Profile";
 import { Provider } from "react-redux";
 import store from "./store/index.store";
 
-import ApolloClient, { gql, Operation } from "apollo-boost";
+import ApolloClient, {
+  Operation,
+  InMemoryCache,
+  ApolloLink,
+  HttpLink
+} from "apollo-boost";
 import { ApolloProvider } from "@apollo/react-hoc";
 
 const client = new ApolloClient({
@@ -16,7 +21,7 @@ const client = new ApolloClient({
   request: (operation: Operation) => {
     const token = localStorage.getItem("token");
     operation.setContext({
-      header: {
+      headers: {
         authorization: token ? `Bearer ${token} ` : ""
       }
     });
@@ -25,18 +30,27 @@ const client = new ApolloClient({
 
 localStorage.clear();
 
-console.log(localStorage);
-
-// client.query({
-//   query: gql`
-//     query {
-//       processList {
-//         id
-//         name
-//       }
-//     }
-//   `
-// });
+const PrivateRouter = () => (
+  <Route
+    exact={true}
+    render={() => (
+      <>
+        {localStorage.length !== 0 ? (
+          <AuthorizedLayout>
+            <AuthorizedRoute path="/profile" />
+          </AuthorizedLayout>
+        ) : (
+          <Route path="/">
+            <UnAuthorizedLayout>
+              <UnAuthorizedRoute path="/" />
+              <UnAuthorizedRoute path="/registration" />
+            </UnAuthorizedLayout>
+          </Route>
+        )}
+      </>
+    )}
+  />
+);
 
 interface IApp {}
 
@@ -45,48 +59,11 @@ const App: React.FC<IApp> = () => {
     <ApolloProvider client={client}>
       <Provider store={store}>
         <BrowserRouter>
-          <Switch>
-            {localStorage.length === 0 ? (
-              <UnAuthorizedLayout>
-                <UnAuthorizedRoute path="/" />
-                <UnAuthorizedRoute path="/registration" />
-              </UnAuthorizedLayout>
-            ) : (
-              <AuthorizedLayout>
-                <AuthorizedRoute path="/profile" />
-              </AuthorizedLayout>
-            )}
-            <AuthorizedLayout>
-              <AuthorizedRoute path="/profile" />
-            </AuthorizedLayout>
-          </Switch>
+          {/* <ProvidedComponent /> */}
+          <PrivateRouter />
         </BrowserRouter>
       </Provider>
     </ApolloProvider>
-    // <Provider store={store}>
-    //   <BrowserRouter>
-    //     <Switch>
-    //       <UnAuthorizedLayout>
-    //         <UnAuthorizedRoute path="/" />
-    //         <UnAuthorizedRoute path="/registration" />
-    //       </UnAuthorizedLayout>
-    //       {/* <AuthorizedLayout>
-    //         <AuthorizedRoute path="/profile" />
-    //       </AuthorizedLayout> */}
-    //     </Switch>
-    //   </BrowserRouter>
-    // </Provider>
-    // <BrowserRouter>
-    //   <Switch>
-    //     <UnAuthorizedLayout>
-    //       <UnAuthorizedRoute path="/" />
-    //       <UnAuthorizedRoute path="/registration" />
-    //     </UnAuthorizedLayout>
-    //     {/* <AuthorizedLayout>
-    //       <AuthorizedRoute path="/profile" />
-    //     </AuthorizedLayout> */}
-    //   </Switch>
-    // </BrowserRouter>
   );
 };
 

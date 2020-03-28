@@ -13,6 +13,7 @@ import HideOrShowStyles from "../../components/HideOrShowComponent/HideOrShow";
 /* Interface */
 import IInputProps from "./Input.interface";
 import classNames from "classnames";
+import IInputField from "./Input.interface";
 
 const Input: React.FC<IInputProps> = props => {
   const [visibility, setVisibility] = useState(false);
@@ -83,14 +84,6 @@ const Input: React.FC<IInputProps> = props => {
     </label>
   );
 };
-
-interface IInputField extends Partial<WrappedFieldProps> {
-  placeholder?: string;
-  type?: "text" | "password";
-  className?: Object;
-  btnHandler?(): any;
-  passwordHandler?(e: any): any;
-}
 
 const InputField: React.FC<IInputField & BaseFieldProps> = props => {
   return <Field name={props.name} component={Input} {...props} />;

@@ -1,26 +1,26 @@
 import React, { useState } from "react";
 import classNames from "classnames";
-import { Dispatch } from "redux";
-import { initialize } from "redux-form";
 import { CHANGE_INITIAL_VALUE } from "../../store/actions/actions";
-import store from "../../store/index.store";
 
 /* Components */
 import InputField from "../../components/InputComponent/Input";
 import Button from "../../components/ButtonComponent/Button";
 import Header from "../../components/HeaderComponent/Header";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import ErrorMessage from "../../components/ErrorMessageComponent/ErrorMessageComponent";
 
 /* Styles */
 import InputStyles from "../../components/InputComponent/Input.style";
 import LinkStyles from "../LogIn/LogIn.style";
 import HeaderStyles from "../../components/HeaderComponent/Header.style";
+import ButtonStyles from "../../components/ButtonComponent/Button.style";
 
 /* Validators */
 import {
   isEmailCorrect,
   registrateFormOnSubmitValidator,
-  comparePasswords
+  comparePasswords,
+  startsWithUpperCase
 } from "../../validators/validators";
 
 /* Interfaces */
@@ -28,11 +28,11 @@ import IRegistrateProps from "./Registrate.inteface";
 import { reduxForm } from "redux-form";
 import { useMutation } from "@apollo/react-hooks";
 import {
-  SignUpMutation,
-  SignUpValues,
-  LogInMutation,
-  User,
-  LogInMutatonProps
+  ISignUpMutation,
+  ISignUpValues,
+  ILogInMutation,
+  IUser,
+  ILogInMutatonProps
 } from "../../mutations/mutation.type";
 
 /* Apollo  */
@@ -41,29 +41,26 @@ import loginMutation from "../../mutations/loginMutation";
 import { connect } from "react-redux";
 
 const Registrate = (props: any) => {
+  const { handleSubmit, CHANGE_INITIAL_VALUE } = props;
+
   const [isAnyErrors, setError] = useState("");
+  const history = useHistory();
+
   const { common, registrateHeader } = HeaderStyles;
   const { InputFieldStyle } = InputStyles;
   const CurrentHeaderStyle = classNames(common, registrateHeader);
 
-  const {
-    handleSubmit,
-    CHANGE_INITIAL_VALUE,
-    initialValues,
-    initialize
-  } = props;
+  const { commonStyles, bigBtn } = ButtonStyles;
+  const btnStyles = classNames(commonStyles, bigBtn);
 
-  const validatePasswords = comparePasswords(initialValues);
-
-  const [signUp] = useMutation<SignUpMutation, SignUpValues>(signupMutation);
-  const [logIn] = useMutation<LogInMutation<User>, LogInMutatonProps>(
+  const [signUp] = useMutation<ISignUpMutation, ISignUpValues>(signupMutation);
+  const [logIn] = useMutation<ILogInMutation<IUser>, ILogInMutatonProps>(
     loginMutation
   );
 
   const registrateOnSubmit = (fields: any) => {
     if (registrateFormOnSubmitValidator(fields) !== null) {
       setError("Есть незаполненные поля");
-      console.log("asd");
     } else {
       setError("");
       return new Promise((resolve, reject) => {
@@ -78,8 +75,6 @@ const Registrate = (props: any) => {
           .then(data => {
             resolve(data);
             console.log(data);
-            // localStorage.setItem("token", `${data.data?.login.token}`);
-            // history.push("/profile");
           })
           .then(() => {
             logIn({
@@ -89,24 +84,18 @@ const Registrate = (props: any) => {
               }
             }).then(data => {
               console.log(data);
+              localStorage.setItem("token", `${data.data?.login.token}`);
+              history.push("/profile");
             });
+          })
+          .catch(error => {
+            reject(setError(`${error.message}`));
           });
-        // .catch(error => {
-        //   switch (`${error.message}`) {
-        //     case "GraphQL error: Incorrect password":
-        //       reject(setError("Неправильный пароль"));
-        //       break;
-        //     case "GraphQL error: No user with that email":
-        //       reject(setError("Нет пользователя с этим email"));
-        //       break;
-        //   }
-        // });
       });
     }
   };
 
   const handlePasswordValidation = (e: any) => {
-    initialize(e.target.value);
     CHANGE_INITIAL_VALUE(e.target.value);
   };
 
@@ -118,14 +107,14 @@ const Registrate = (props: any) => {
         placeholder="Имя"
         type="text"
         className={InputFieldStyle}
-        //validate={}
+        validate={startsWithUpperCase}
       />
       <InputField
         name="registrateSecondName"
         className={InputFieldStyle}
         placeholder="Фамилия"
         type="text"
-        // validate=
+        validate={startsWithUpperCase}
       />
       <InputField
         className={InputFieldStyle}
@@ -146,12 +135,13 @@ const Registrate = (props: any) => {
         name="registratePasswordRepeat"
         placeholder="Повторите пароль"
         type="password"
-        validate={[validatePasswords]}
+        validate={[comparePasswords]}
       />
-      <Button title="Применить и войти" />
+      <Button title="Применить и войти" className={btnStyles} />
       <Link to="/" className={LinkStyles}>
         Уже зарегистрированны? Вход
       </Link>
+      {isAnyErrors.length > 0 ? <ErrorMessage message={isAnyErrors} /> : null}
     </form>
   );
 };
@@ -162,32 +152,6 @@ const connectedRegistration = reduxForm<IRegistrateProps>({
   keepDirtyOnReinitialize: true
 })(Registrate);
 
-// const mapStateToProps = (state: any) => ({
-//   // const { initialValues } = state;
-//   // return initialValues;
-//   initialValues: state.getValue
-// });
-
-// const mapDispatchToProps = (dispatch: Dispatch) => ({
-//   giveValue: (value: any) => {
-//     dispatch(CHANGE_INITIAL_VALUE(value));
-//   }
-// });
-
-// const mapDispatchToProps = (dispatch: Dispatch) => {
-//   dispatch(CHANGE_INITIAL_VALUE(`${value}`));
-// };
-
-// export default reduxForm<IRegistrateProps>({ form: "registrateForm" })(
-//   Registrate
-// );
-export default connect(
-  null,
-  {
-    CHANGE_INITIAL_VALUE
-    // initialize: {
-    //   email: "asd"
-    // }
-  }
-  //mapDispatchToProps
-)(connectedRegistration);
+export default connect(null, {
+  CHANGE_INITIAL_VALUE
+})(connectedRegistration);

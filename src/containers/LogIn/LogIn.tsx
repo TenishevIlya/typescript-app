@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { reduxForm } from "redux-form";
 import { useHistory } from "react-router-dom";
-//import classNames from "classnames";
+import classNames from "classnames";
 
 /* Components */
 import InputField from "../../components/InputComponent/Input";
@@ -13,13 +13,15 @@ import ErrorMessage from "../../components/ErrorMessageComponent/ErrorMessageCom
 /* styles */
 import InputStyles from "../../components/InputComponent/Input.style";
 import LinkStyles from "./LogIn.style";
+import ButtonStyles from "../../components/ButtonComponent/Button.style";
 
 /* Interfaces */
 import ILogInProps from "./Login.interface";
 import {
-  LogInMutation,
-  User,
-  LogInMutatonProps
+  ILogInMutation,
+  IUser,
+  ILogInMutatonProps,
+  TProcessListData
 } from "../../mutations/mutation.type";
 
 /* App store */
@@ -32,8 +34,9 @@ import {
 } from "../../validators/validators";
 
 /* Apollo */
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation, useQuery } from "@apollo/react-hooks";
 import loginMutation from "../../mutations/loginMutation";
+import currentUserQuery from "../../mutations/currentUserQuery";
 
 const LogIn = (props: any) => {
   const [isAnyErrors, setError] = useState("");
@@ -44,7 +47,8 @@ const LogIn = (props: any) => {
 
   const { handleSubmit } = props;
 
-  console.log(props?.loginForm?.syncErrors);
+  const { commonStyles, bigBtn } = ButtonStyles;
+  const btnStyles = classNames(commonStyles, bigBtn);
 
   // const handleBtnDisable = () => {
   //   if (props?.loginForm?.syncErrors !== undefined) {
@@ -70,9 +74,15 @@ const LogIn = (props: any) => {
             password: fields.loginPassword
           }
         })
-          .then(data => {
-            resolve(data);
-            localStorage.setItem("token", `${data.data?.login.token}`);
+          .then(res => {
+            resolve(res);
+            localStorage.setItem("token", `${res.data?.login.token}`);
+            localStorage.setItem(
+              "username",
+              `${res.data?.login.user.secondName} ${res.data?.login.user.firstName}`
+            );
+            localStorage.setItem("email", `${fields.loginEmail}`);
+            localStorage.setItem("password", `${fields.loginPassword}`);
             history.push("/profile");
           })
           .catch(error => {
@@ -89,7 +99,7 @@ const LogIn = (props: any) => {
     }
   };
 
-  const [logIn] = useMutation<LogInMutation<User>, LogInMutatonProps>(
+  const [logIn] = useMutation<ILogInMutation<IUser>, ILogInMutatonProps>(
     loginMutation
   );
 
@@ -111,7 +121,11 @@ const LogIn = (props: any) => {
           type="password"
           className={InputFieldStyle}
         />
-        <Button title="Войти в систему" disable={isBtnDisabled} />
+        <Button
+          title="Войти в систему"
+          className={btnStyles}
+          disable={isBtnDisabled}
+        />
         <Link className={LinkStyles} to="/registration">
           Зарегистрироваться
         </Link>

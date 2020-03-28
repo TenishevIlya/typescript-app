@@ -20,8 +20,6 @@ const Sidebar: React.FC<ISidebarState> = props => {
   const { headerSideMenuTitle, headerMenuTitle } = ProfileLayoutStyles;
   const { sidebarMenuHeader } = MenuHeaderStyles;
 
-  console.log(props);
-
   return (
     <div className={common}>
       <div className={menuPart}>

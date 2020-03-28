@@ -14,8 +14,16 @@ const Menu: React.FC = () => {
   const { common } = MenuStyle;
   return (
     <div className={common}>
-      <MenuItem title="Username" icon={UserIcon} />
-      <MenuItem title="Список процессов" icon={ProcessListLogo} />
+      <MenuItem
+        title={localStorage.getItem("username")}
+        icon={UserIcon}
+        reducerAction="SHOW_EDIT_PROFILE"
+      />
+      <MenuItem
+        title="Список процессов"
+        icon={ProcessListLogo}
+        reducerAction="SHOW_PROCESS_LIST"
+      />
     </div>
   );
 };

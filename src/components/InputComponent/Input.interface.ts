@@ -1,3 +1,5 @@
+import { WrappedFieldProps } from "redux-form";
+
 export default interface IInputProps {
   placeholder?: string;
   className?: string;
@@ -5,5 +7,13 @@ export default interface IInputProps {
   input?: any;
   meta?: any;
   bntHandler?(): any;
+  passwordHandler?(e: any): any;
+}
+
+interface IInputField extends Partial<WrappedFieldProps> {
+  placeholder?: string;
+  type?: "text" | "password";
+  className?: Object;
+  btnHandler?(): any;
   passwordHandler?(e: any): any;
 }

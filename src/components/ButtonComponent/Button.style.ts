@@ -18,6 +18,12 @@ const ButtonStyles = {
     height: "36px",
     width: "328px",
     margin: "1.8vh 48px 0 48px"
+  }),
+  smallBtn: style({
+    height: "36px",
+    width: "116px",
+    marginRight: "0px",
+    marginLeft: "auto"
   })
 };
 

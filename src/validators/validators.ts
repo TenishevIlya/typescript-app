@@ -1,10 +1,22 @@
-const errors: any = {};
+// import store there because when i call it
+// in the Registrate container it causes
+// maximum update depth exceeded error
+import store from "../store/index.store";
 
 export const loginFormOnSubmitValidator = (fields: any) => {
   if (fields.loginPassword === undefined || fields.loginEmail === undefined) {
     return "Есть незаполненные поля";
   } else {
     return null;
+  }
+};
+
+export const startsWithUpperCase = (value?: string) => {
+  const upperCaseStartingLetter = value?.[0].toUpperCase();
+  if (value?.[0] === upperCaseStartingLetter) {
+    return null;
+  } else {
+    return "Поле должно начинаться с заглавной буквы";
   }
 };
 
@@ -16,7 +28,6 @@ export const registrateFormOnSubmitValidator = (fields: any) => {
     fields.registratePassword === undefined ||
     fields.registratePasswordRepeat === undefined
   ) {
-    console.log("Есть незаполненные поля");
     return "Есть незаполненные поля";
   } else {
     return null;
@@ -40,13 +51,10 @@ export const inputLength = (len: number) => (value: string) => {
     : null;
 };
 
-export const comparePasswords = (initialValue: string) => (
-  currentValue: string
-) => {
-  if (initialValue !== currentValue) {
+export const comparePasswords = (value: string) => {
+  if (store.getState().getValue !== value) {
     return "Пароли не совпадают";
   } else {
-    console.log("success");
     return null;
   }
 };

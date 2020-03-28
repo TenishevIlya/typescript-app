@@ -13,6 +13,10 @@ const HeaderStyles = {
     lineHeight: "25px",
     marginLeft: "48px",
     marginBottom: "3vh"
+  }),
+  editUserHeader: style({
+    fontSize: "26px",
+    lineHeight: "35px"
   })
 };
 
