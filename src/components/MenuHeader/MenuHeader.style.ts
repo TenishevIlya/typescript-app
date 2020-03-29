@@ -16,7 +16,7 @@ const MenuStyles = {
     paddingLeft: "1.75vw",
     background: "#535374",
     boxShadow: "0px 1px 0px rgba(0, 0, 0, 0.2)",
-    height: "54px"
+    height: "8vh"
   })
 };
 

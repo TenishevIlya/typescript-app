@@ -9,13 +9,19 @@ import MenuItem from "../../components/MenuItem/MenuItemComponent";
 
 /* Styles */
 import MenuStyle from "./Menu.style";
+import { useQuery } from "@apollo/react-hooks";
+import { ICurrentUser } from "../../mutations/mutation.type";
+import currentUserQuery from "../../mutations/currentUserQuery";
 
 const Menu: React.FC = () => {
+  const { data } = useQuery<ICurrentUser>(currentUserQuery, {
+    fetchPolicy: "network-only"
+  });
   const { common } = MenuStyle;
   return (
     <div className={common}>
       <MenuItem
-        title={localStorage.getItem("username")}
+        title={`${data?.currentUser.secondName} ${data?.currentUser.firstName}`}
         icon={UserIcon}
         reducerAction="SHOW_EDIT_PROFILE"
       />

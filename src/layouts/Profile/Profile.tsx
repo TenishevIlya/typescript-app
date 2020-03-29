@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
-import classNames from "classnames";
+import React, { useState } from "react";
+import classnames from "classnames";
 
 /* Contaiers */
 import EditUser from "../../containers/EditUser/EditUser";
+import ProcessList from "../../containers/ProcessContainer/ProcessContainer";
 
 /* Components */
-import Header from "../../components/HeaderComponent/Header";
 import Sidebar from "../../containers/SidebarComponent/Sidebar";
 import MenuHeader from "../../components/MenuHeader/MenuHeader";
 
@@ -17,24 +17,16 @@ import ProfileLayoutStyles from "./Profile.style";
 
 /* Interfaces */
 import IProfileLayoutProps from "./Profile.inteface";
-import Menu from "../../containers/Menu/Menu";
-import {
-  TProcessListData,
-  ILogInMutation,
-  IUser,
-  ILogInMutatonProps
-} from "../../mutations/mutation.type";
+import { ICurrentUser } from "../../mutations/mutation.type";
 
 /* Queries */
-import processListQuery from "../../mutations/processListQuery";
-import { useQuery, useMutation } from "@apollo/react-hooks";
-import loginMutation from "../../mutations/loginMutation";
+import { useQuery } from "@apollo/react-hooks";
 import currentUserQuery from "../../mutations/currentUserQuery";
 
 /* Store */
 import store from "../../store/index.store";
 
-const ProfileLayout: React.FC<IProfileLayoutProps> = ({ children }) => {
+const ProfileLayout: React.FC<IProfileLayoutProps> = () => {
   const [sidebarState, setSidebarState] = useState(false);
   const [layoutContent, setLayoutContent] = useState("SHOW_EDIT_PROFILE");
 
@@ -47,31 +39,19 @@ const ProfileLayout: React.FC<IProfileLayoutProps> = ({ children }) => {
     }
   };
 
-  // const { loading, data, error } = useQuery<TProcessListData>(
-  //   currentUserQuery,
-  //   { fetchPolicy: "network-only" }
-  // );
-
-  // console.log(data);
-
-  const { loading, data, error } = useQuery<TProcessListData>(
-    processListQuery,
-    {
-      fetchPolicy: "network-only"
-    }
-  );
-  console.log(data);
-
-  const [logIn] = useMutation<ILogInMutation<IUser>, ILogInMutatonProps>(
-    loginMutation
-  );
+  const { loading, data, error } = useQuery<ICurrentUser>(currentUserQuery, {
+    fetchPolicy: "network-only"
+  });
 
   const {
     header,
     main,
     headerMenuTitle,
-    headerSideMenuTitle
+    headerSideMenuTitle,
+    mainEditPart
   } = ProfileLayoutStyles;
+
+  const editLayoutStyle = classnames(main, mainEditPart);
 
   return (
     <div
@@ -80,7 +60,10 @@ const ProfileLayout: React.FC<IProfileLayoutProps> = ({ children }) => {
       }}
     >
       {sidebarState ? (
-        <Sidebar action={() => setSidebarState(!sidebarState)} />
+        <Sidebar
+          userName={`${data?.currentUser.secondName} ${data?.currentUser.firstName}.Редактирование`}
+          action={() => setSidebarState(!sidebarState)}
+        />
       ) : null}
       <div className={header}>
         <MenuHeader
@@ -90,11 +73,15 @@ const ProfileLayout: React.FC<IProfileLayoutProps> = ({ children }) => {
           title="Menu"
         />
       </div>
-      <div className={main}>
+      <div
+        className={
+          layoutContent === "SHOW_EDIT_PROFILE" ? editLayoutStyle : main
+        }
+      >
         {/* {store.getState().setEditLayout === "SHOW_EDIT_PROFILE" ? (
           <EditUser />
         ) : null} */}
-        {layoutContent === "SHOW_EDIT_PROFILE" ? <EditUser /> : null}
+        {layoutContent === "SHOW_EDIT_PROFILE" ? <EditUser /> : <ProcessList />}
       </div>
     </div>
   );

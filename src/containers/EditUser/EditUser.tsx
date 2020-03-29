@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { reduxForm } from "redux-form";
+import { reduxForm, InjectedFormProps } from "redux-form";
 import classNames from "classnames";
 import { CHANGE_INITIAL_VALUE } from "../../store/actions/actions";
 
@@ -17,7 +17,7 @@ import HeaderStyles from "../../components/HeaderComponent/Header.style";
 import ButtonStyles from "../../components/ButtonComponent/Button.style";
 
 /* Interfaces */
-import IEditUserProps from "./EditUser.inerface";
+import { IEditUserProps, IEditUserValues } from "./EditUser.inerface";
 
 /* Validators */
 import {
@@ -28,14 +28,17 @@ import {
 
 /* Mutations */
 import editUserMutation from "../../mutations/editUserMutation";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation, useQuery } from "@apollo/react-hooks";
 import {
-  IEditUserData,
-  IEditUserValues,
-  IUser
+  TEditUserData,
+  TEditUserValues,
+  IUser,
+  ICurrentUser
 } from "../../mutations/mutation.type";
+import currentUserQuery from "../../mutations/currentUserQuery";
 
-const EditUser = (props: any) => {
+const EditUser: React.FC<InjectedFormProps<IEditUserValues> &
+  IEditUserProps> = (props: any) => {
   const { handleSubmit, CHANGE_INITIAL_VALUE } = props;
 
   const { formStyles, formItem, headerPart } = EditFormStyles;
@@ -43,23 +46,34 @@ const EditUser = (props: any) => {
   const { common, editUserHeader } = HeaderStyles;
   const { commonStyles, smallBtn } = ButtonStyles;
 
-  const [edituser] = useMutation<IEditUserData<IUser>, IEditUserValues>(
-    editUserMutation
+  const { data } = useQuery<ICurrentUser>(currentUserQuery, {
+    fetchPolicy: "network-only"
+  });
+
+  const [edituser] = useMutation<TEditUserData<IUser>, TEditUserValues>(
+    editUserMutation,
+    {
+      fetchPolicy: "network-only"
+    }
   );
 
   const editOnSubmit = (fields: any) => {
     return new Promise((resolve, reject) => {
       edituser({
         variables: {
-          id: Math.ceil(Math.random() * (10000 - 0)),
+          id: data?.currentUser.id,
           email: fields.editEmail,
           firstName: fields.editName,
           secondName: fields.editSecondName,
           password: fields.editPasword
         }
       })
-        .then(data => console.log(data))
-        .catch(e => console.log(e.message));
+        .then(data => {
+          resolve(data);
+        })
+        .catch(e => {
+          reject(e);
+        });
     });
   };
 
@@ -67,7 +81,7 @@ const EditUser = (props: any) => {
   const EditFieldStyle = classNames(InputFieldStyle, InputFieldEdit);
   const EditBtnStyle = classNames(commonStyles, smallBtn);
 
-  const headerTitle = localStorage.getItem("username") + ".Редактирование";
+  const headerTitle = `${data?.currentUser.secondName} ${data?.currentUser.firstName}. Редактирование`;
 
   const handlePasswordValidation = (e: any) => {
     CHANGE_INITIAL_VALUE(e.target.value);
@@ -144,7 +158,7 @@ const EditUser = (props: any) => {
   );
 };
 
-const connectedEdition = reduxForm<IEditUserProps>({
+const connectedEdition = reduxForm<IEditUserValues, IEditUserProps>({
   form: "editUserForm",
   enableReinitialize: true,
   keepDirtyOnReinitialize: true

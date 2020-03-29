@@ -26,6 +26,10 @@ export interface ISignUpMutation {
   };
 }
 
+export interface ICurrentUser {
+  currentUser: IUser;
+}
+
 export interface ISignUpValues {
   firstName: string;
   secondName: string;
@@ -48,16 +52,16 @@ export type TProcessListValues = {
   };
 };
 
-export interface IEditUserData<User> {
+export type TEditUserData<User> = {
   editUser: User;
-}
+};
 
-export interface IEditUserValues {
-  id: number;
+export type TEditUserValues = {
+  id: number | undefined;
   email: string;
   firstName: string;
   secondName: string;
   password: string;
-}
+};
 
 export type TProcessListData = { processList: TProcessListValues[] };

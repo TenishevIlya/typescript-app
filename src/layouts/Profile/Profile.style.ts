@@ -7,10 +7,11 @@ const ProfileLyaoutStyles = {
     display: "flex",
     alignItems: "center",
     boxShadow: "0px 1px 10px rgba(104, 121, 187, 0.1)"
+    // position: "fixed"
   }),
   main: style({
     background: "#EBF2FB",
-    height: "92vh",
+    height: "100%",
     width: "100%",
     boxSizing: "border-box",
     display: "flex",
@@ -35,6 +36,9 @@ const ProfileLyaoutStyles = {
     lineHeight: "19px",
     alignItems: "center",
     color: "white"
+  }),
+  mainEditPart: style({
+    height: "92vh"
   })
 };
 

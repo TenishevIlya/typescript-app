@@ -8,12 +8,7 @@ import AuthorizedLayout from "./layouts/Profile/Profile";
 import { Provider } from "react-redux";
 import store from "./store/index.store";
 
-import ApolloClient, {
-  Operation,
-  InMemoryCache,
-  ApolloLink,
-  HttpLink
-} from "apollo-boost";
+import ApolloClient, { Operation } from "apollo-boost";
 import { ApolloProvider } from "@apollo/react-hoc";
 
 const client = new ApolloClient({
@@ -28,7 +23,7 @@ const client = new ApolloClient({
   }
 });
 
-localStorage.clear();
+//localStorage.clear();
 
 const PrivateRouter = () => (
   <Route
