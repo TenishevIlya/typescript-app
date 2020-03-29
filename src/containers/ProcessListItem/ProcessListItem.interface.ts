@@ -6,7 +6,7 @@ export interface IProcessListItemProps {
   averageActiveTime: string;
   employeesInvolvedProcess: number;
   numberOfScenarios: number;
-  start: string;
-  end: string;
-  loading: string;
+  start?: string;
+  end?: string;
+  loading?: string;
 }

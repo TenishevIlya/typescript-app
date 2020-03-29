@@ -15,32 +15,28 @@ import ProcessListItemStyle from "../ProcessListItem/ProcessListItem.style";
 const ProcessContainer: React.FC = () => {
   const { data } = useQuery<TProcessListData>(processListQuery);
 
-  console.log(data);
+  console.log(data?.processList[0].id);
 
   return (
     <div className={ProcessListStyle}>
-      {/* {data?.processList.map(process => {
+      {data?.processList.map((process: any) => {
+        console.log(process);
         return (
           <ProcessListItem
-            id={process.processList.id}
-            name={process.processList.name}
-            numberOfExecutions={process.processList.numberOfExecutions}
-            averageLeadTime={process.processList.averageLeadTime}
-            averageActiveTime={process.processList.averageLeadTime}
-            employeesInvolvedProcess={
-              process.processList.employeesInvolvedProcess
-            }
-            numberOfScenarios={process.processList.numberOfScenarios}
-            start={process.processList.start}
-            end={process.processList.end}
-            loading={process.processList.loading}
+            key={process.id + process.name}
+            id={process.id}
+            name={process.name}
+            numberOfExecutions={process.numberOfExecutions}
+            averageLeadTime={process.averageLeadTime}
+            averageActiveTime={process.averageLeadTime}
+            employeesInvolvedProcess={process.employeesInvolvedProcess}
+            numberOfScenarios={process.numberOfScenarios}
+            start={process.start}
+            end={process.end}
+            loading={process.loading}
           />
         );
-      })} */}
-      {data?.processList.map(process => {
-        return <ProcessListItem />;
       })}
-      {/* <ProcessListItem /> */}
     </div>
   );
 };

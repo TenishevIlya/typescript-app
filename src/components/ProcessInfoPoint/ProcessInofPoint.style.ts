@@ -3,17 +3,28 @@ import { style } from "typestyle";
 const ProcessInfoPointStyle = {
   commonPoint: style({
     display: "flex",
-    alignItems: "center"
+    flexDirection: "column",
+    marginRight: "4.5vw"
   }),
-  pointExplanation: style({
+  captionStyle: style({
     fontFamily: "Open Sans",
     fontStyle: "normal",
     fontWeight: "normal",
     fontSize: "12px",
     lineHeight: "16px",
+    color: "#999999",
+    marginLeft: "36.5px"
+  }),
+  logoAndHeader: style({
     display: "flex",
-    alignItems: "center",
-    color: "#999999"
+    alignItems: "center"
+  }),
+  logoStyle: style({
+    width: "24px",
+    height: "24px"
+  }),
+  topItemBlock: style({
+    marginBottom: "24px"
   })
 };
 

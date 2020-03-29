@@ -5,7 +5,8 @@ const ProcessMapLinkStyle = {
     display: "flex",
     alignItems: "center",
     marginLeft: "auto",
-    marginRight: 0
+    marginRight: 0,
+    cursor: "pointer"
   })
 };
 

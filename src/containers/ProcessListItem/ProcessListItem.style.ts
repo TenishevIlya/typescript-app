@@ -18,7 +18,9 @@ const ProcessListItemStyle = {
   }),
   mainPart: style({
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
+    marginLeft: "24px",
+    height: "192px"
   })
 };
 

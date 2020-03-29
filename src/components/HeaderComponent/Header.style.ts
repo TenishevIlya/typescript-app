@@ -30,6 +30,11 @@ const HeaderStyles = {
     color: "#6879BB",
     textDecoration: "none",
     marginRight: "12px"
+  }),
+  processInfoHeaderStyle: style({
+    fontSize: "26px",
+    lineHeight: "35px",
+    marginLeft: "12px"
   })
 };
 

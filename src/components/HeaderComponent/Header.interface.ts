@@ -1,4 +1,4 @@
 export default interface IHeaderProps {
-  title: string;
+  title: string | number;
   className: string;
 }

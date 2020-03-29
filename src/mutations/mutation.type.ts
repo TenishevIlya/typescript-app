@@ -38,18 +38,20 @@ export interface ISignUpValues {
 }
 
 export type TProcessListValues = {
-  processList: {
-    id: string;
-    name: string;
-    numberOfExecutions: number;
-    averageLeadTime: string;
-    averageActiveTime: string;
-    employeesInvolvedProcess: number;
-    numberOfScenarios: number;
-    start: string;
-    end: string;
-    loading: string;
-  };
+  id: string;
+  name: string;
+  numberOfExecutions: number;
+  averageLeadTime: string;
+  averageActiveTime: string;
+  employeesInvolvedProcess: number;
+  numberOfScenarios: number;
+  start: string;
+  end: string;
+  loading: string;
+};
+
+export type TProcessListData = {
+  processList: TProcessListValues[];
 };
 
 export type TEditUserData<User> = {
@@ -63,5 +65,3 @@ export type TEditUserValues = {
   secondName: string;
   password: string;
 };
-
-export type TProcessListData = { processList: TProcessListValues[] };
