@@ -23,7 +23,7 @@ const client = new ApolloClient({
   }
 });
 
-localStorage.clear();
+//localStorage.clear();
 
 const PrivateRouter = () => (
   <Route

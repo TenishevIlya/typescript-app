@@ -6,8 +6,9 @@ const ProfileLyaoutStyles = {
     height: "8vh",
     display: "flex",
     alignItems: "center",
-    boxShadow: "0px 1px 10px rgba(104, 121, 187, 0.1)"
-    // position: "fixed"
+    boxShadow: "0px 1px 10px rgba(104, 121, 187, 0.1)",
+    background: "#FFFFFF",
+    position: "fixed"
   }),
   main: style({
     background: "#EBF2FB",
@@ -17,7 +18,8 @@ const ProfileLyaoutStyles = {
     display: "flex",
     flexDirection: "column",
     paddingLeft: "1.75%",
-    paddingRight: "1.61%"
+    paddingRight: "1.61%",
+    paddingTop: "8vh"
   }),
   headerMenuTitle: style({
     fontFamily: "'Open Sans', sans-serif",

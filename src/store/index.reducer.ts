@@ -4,7 +4,10 @@ export type TAction = {
 };
 
 // can't find a better way to set initial state at the beginning
-export const getInitialValue = (state: any = "some state", action: TAction) => {
+export const getInitialValue = (
+  state: string = "some state",
+  action: TAction
+) => {
   switch (action.type) {
     default:
       return state;
@@ -14,7 +17,7 @@ export const getInitialValue = (state: any = "some state", action: TAction) => {
 };
 
 export const setProfileLayout = (
-  state: any = "SHOW_EDIT_PROFILE",
+  state: string = "SHOW_EDIT_PROFILE",
   action: TAction
 ) => {
   switch (action.type) {
@@ -22,5 +25,12 @@ export const setProfileLayout = (
       return state;
     case "CHANGE_PROFILE_CHILDREN":
       return action.payload;
+  }
+};
+
+export const hideSidebar = (state: boolean = false, action: TAction) => {
+  switch (action.type) {
+    default:
+      return state;
   }
 };
