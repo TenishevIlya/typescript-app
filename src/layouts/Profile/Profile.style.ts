@@ -40,7 +40,7 @@ const ProfileLyaoutStyles = {
     color: "white"
   }),
   mainEditPart: style({
-    height: "92vh"
+    height: "100vh"
   })
 };
 

@@ -32,5 +32,7 @@ export const hideSidebar = (state: boolean = false, action: TAction) => {
   switch (action.type) {
     default:
       return state;
+    case "HIDE_SIDEBAR":
+      return action.payload;
   }
 };

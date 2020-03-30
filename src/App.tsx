@@ -54,7 +54,6 @@ const App: React.FC<IApp> = () => {
     <ApolloProvider client={client}>
       <Provider store={store}>
         <BrowserRouter>
-          {/* <ProvidedComponent /> */}
           <PrivateRouter />
         </BrowserRouter>
       </Provider>

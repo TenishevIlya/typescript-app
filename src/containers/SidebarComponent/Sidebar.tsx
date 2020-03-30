@@ -15,6 +15,10 @@ import MenuHeaderStyles from "../../components/MenuHeader/MenuHeader.style";
 /* Interfaces */
 import ISidebarState from "../SidebarComponent/Sidebar.interface";
 
+/* Actions */
+import { HIDE_SIDEBAR } from "../../store/actions/actions";
+import store from "../../store/index.store";
+
 const Sidebar: React.FC<ISidebarState> = props => {
   const { common, unUsePart, menuPart } = SidebarStyles;
   const { headerSideMenuTitle, headerMenuTitle } = ProfileLayoutStyles;
@@ -33,7 +37,10 @@ const Sidebar: React.FC<ISidebarState> = props => {
         </div>
         <Menu />
       </div>
-      <div className={unUsePart}></div>
+      <div
+        className={unUsePart}
+        onClick={() => store.dispatch(HIDE_SIDEBAR(true))}
+      ></div>
     </div>
   );
 };

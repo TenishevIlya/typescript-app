@@ -77,12 +77,6 @@ const LogIn = (props: any) => {
           .then(res => {
             resolve(res);
             localStorage.setItem("token", `${res.data?.login.token}`);
-            localStorage.setItem(
-              "username",
-              `${res.data?.login.user.secondName} ${res.data?.login.user.firstName}`
-            );
-            localStorage.setItem("email", `${fields.loginEmail}`);
-            localStorage.setItem("password", `${fields.loginPassword}`);
             history.push("/profile");
           })
           .catch(error => {

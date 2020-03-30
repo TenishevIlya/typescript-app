@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import classnames from "classnames";
 
 /* Contaiers */
@@ -25,10 +25,17 @@ import currentUserQuery from "../../mutations/currentUserQuery";
 
 /* Store */
 import store from "../../store/index.store";
+import { HIDE_SIDEBAR } from "../../store/actions/actions";
 
 const ProfileLayout: React.FC<IProfileLayoutProps> = () => {
   const [sidebarState, setSidebarState] = useState(false);
   const [layoutContent, setLayoutContent] = useState("SHOW_EDIT_PROFILE");
+
+  // useEffect(() => {
+  //   if (store.getState().hiddenSidebar === true) {
+  //     setSidebarState(false);
+  //   }
+  // });
 
   //think about it
   const handleLayoutContent = () => {
@@ -43,13 +50,7 @@ const ProfileLayout: React.FC<IProfileLayoutProps> = () => {
     fetchPolicy: "network-only"
   });
 
-  const {
-    header,
-    main,
-    headerMenuTitle,
-    headerSideMenuTitle,
-    mainEditPart
-  } = ProfileLayoutStyles;
+  const { header, main, headerMenuTitle, mainEditPart } = ProfileLayoutStyles;
 
   const editLayoutStyle = classnames(main, mainEditPart);
 
