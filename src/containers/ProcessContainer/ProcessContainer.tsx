@@ -1,5 +1,4 @@
 import React from "react";
-import moment from "moment";
 
 /* Components */
 import ProcessListItem from "../ProcessListItem/ProcessListItem";
@@ -8,26 +7,18 @@ import ProcessListItem from "../ProcessListItem/ProcessListItem";
 import ProcessListStyle from "./ProcessContainer.style";
 
 /* Mutations */
-import { useMutation, useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/react-hooks";
 import { TProcessListData } from "../../mutations/mutation.type";
 import processListQuery from "../../mutations/processListQuery";
-import ProcessListItemStyle from "../ProcessListItem/ProcessListItem.style";
+
+/* ConvertationFuncs */
+import {
+  convertTime,
+  convertDates
+} from "../../utils/dataConvertation/dataConvertation";
 
 const ProcessContainer: React.FC = () => {
   const { data } = useQuery<TProcessListData>(processListQuery);
-
-  const convertDates = (value: number[]) => {
-    return value.map(item => {
-      return `${moment.unix(item).format("DD MMM YYYY")}`;
-    });
-  };
-
-  const convertTime = (value: string[]) => {
-    return value.map(item => {
-      const durationTime = moment.duration(Number(item));
-      return `${durationTime.hours()}ч ${durationTime.minutes()}м`;
-    });
-  };
 
   return (
     <div className={ProcessListStyle}>
