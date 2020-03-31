@@ -12,7 +12,8 @@ const ErrorMessageStyle = {
     height: "96px",
     background: "#FFE9DB",
     marginTop: "24px",
-    display: "flex"
+    display: "flex",
+    alignItems: "center"
   }),
   message: style({
     fontFamily: "Open Sans",
@@ -26,8 +27,52 @@ const ErrorMessageStyle = {
     padding: "36px 0 36px 0"
   }),
   logo: style({
-    background: "rgba(255, 255, 255, 0.01)",
-    paddingLeft: "48px"
+    border: "2px solid #EE4141",
+    boxSizing: "border-box",
+    borderRadius: "4px",
+    marginLeft: "48px",
+    marginRight: "24px",
+    height: "48px",
+    width: "48px",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center"
+  }),
+  triangle: style({
+    width: 0,
+    height: 0,
+    borderLeft: "50px solid transparent",
+    borderRight: "50px solid transparent",
+    borderBottom: "100px solid red",
+    position: "relative",
+
+    $nest: {
+      "&::after": {
+        content: ``,
+        position: "absolute",
+        top: "5px",
+        left: "-45px",
+        width: 0,
+        height: 0,
+        borderLeft: "45px solid transparent",
+        borderRight: "45px solid transparent",
+        borderBottom: "92px solid white"
+      }
+    }
+  }),
+  oval: style({
+    background: "#EE4141",
+    borderRadius: "20px",
+    width: "4px",
+    height: "17px"
+  }),
+  circle: style({
+    width: "4px",
+    height: "4px",
+    background: "#EE4141",
+    marginTop: "2px",
+    borderRadius: "50%"
   })
 };
 

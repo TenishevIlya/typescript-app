@@ -13,7 +13,10 @@ export const validateDay = (value: string) => {
 export const convertTime = (value: string[]) => {
   return value.map(item => {
     const durationTime = moment.duration(Number(item));
-    return `${durationTime.hours()}ч ${durationTime.minutes()}м`;
+    if (durationTime.hours() === 0) {
+      return `${durationTime.minutes()} мин`;
+    }
+    return `${durationTime.hours()}ч ${durationTime.minutes()} мин`;
   });
 };
 

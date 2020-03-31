@@ -8,6 +8,7 @@ export default interface IInputProps {
   meta?: any;
   bntHandler?(): any;
   passwordHandler?(e: any): any;
+  focusHandler?(): any;
 }
 
 interface IInputField extends Partial<WrappedFieldProps> {

@@ -56,6 +56,7 @@ const Input: React.FC<IInputProps> = props => {
             {...input}
             className={`${currentPasswordClass}`}
             onBlur={props.passwordHandler}
+            onClick={props.focusHandler}
           />
           <img // think about component
             src={visibility ? VisibleEye : InVisibleEye}
@@ -77,6 +78,7 @@ const Input: React.FC<IInputProps> = props => {
         placeholder={props.placeholder}
         {...input}
         className={`${currentInputClass}`}
+        onFocus={props.focusHandler}
       />
       {touched & invalid ? (
         <span className={InputErrorMessage}>{error}</span>

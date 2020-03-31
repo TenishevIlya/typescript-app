@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { reduxForm } from "redux-form";
+import { reduxForm, InjectedFormProps } from "redux-form";
 import { useHistory } from "react-router-dom";
 import classNames from "classnames";
 
@@ -16,31 +16,25 @@ import LinkStyles from "./LogIn.style";
 import ButtonStyles from "../../components/ButtonComponent/Button.style";
 
 /* Interfaces */
-import ILogInProps from "./Login.interface";
+import ILogInValues from "./Login.interface";
 import {
   ILogInMutation,
   IUser,
-  ILogInMutatonProps,
-  TProcessListData
+  ILogInMutatonProps
 } from "../../mutations/mutation.type";
-
-/* App store */
-import store from "../../store/index.store";
 
 /* Validators */
 import {
   isEmailCorrect,
   loginFormOnSubmitValidator
-} from "../../validators/validators";
+} from "../../utils/validators/validators";
 
 /* Apollo */
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import loginMutation from "../../mutations/loginMutation";
-import currentUserQuery from "../../mutations/currentUserQuery";
 
-const LogIn = (props: any) => {
+const LogIn: React.FC<InjectedFormProps<ILogInValues>> = (props: any) => {
   const [isAnyErrors, setError] = useState("");
-  const [isBtnDisabled, setDisable] = useState(false);
 
   const history = useHistory();
   const { InputFieldStyle } = InputStyles;
@@ -50,21 +44,14 @@ const LogIn = (props: any) => {
   const { commonStyles, bigBtn } = ButtonStyles;
   const btnStyles = classNames(commonStyles, bigBtn);
 
-  // const handleBtnDisable = () => {
-  //   if (props?.loginForm?.syncErrors !== undefined) {
-  //     console.log("disbled");
-  //     setDisable(true);
-  //   } else {
-  //     console.log("not disabled");
-  //     setDisable(false);
-  //   }
-  // };
-
-  //console.log(store.getState().form.loginForm);
+  const hideWarning = () => {
+    setError("");
+  };
 
   const logInOnSubmit = (fields: any) => {
     if (loginFormOnSubmitValidator(fields) !== null) {
       setError("Есть незаполненные поля");
+      console.log(isAnyErrors);
     } else {
       setError("");
       return new Promise((resolve, reject) => {
@@ -80,12 +67,16 @@ const LogIn = (props: any) => {
             history.push("/profile");
           })
           .catch(error => {
+            console.log(error.message);
             switch (`${error.message}`) {
               case "GraphQL error: Incorrect password":
                 reject(setError("Неправильный пароль"));
                 break;
               case "GraphQL error: No user with that email":
                 reject(setError("Нет пользователя с этим email"));
+                break;
+              case "Network error: Failed to fetch":
+                reject(setError("Ошибка подключения к серверу"));
                 break;
             }
           });
@@ -105,20 +96,24 @@ const LogIn = (props: any) => {
           placeholder="Электронная почта"
           type="text"
           className={InputFieldStyle}
-          //validate={handleBtnDisable}
           validate={[isEmailCorrect]}
-          // btnHandler={handleBtnDisable}
+          focusHandler={hideWarning}
         />
         <InputField
           name="loginPassword"
           placeholder="Пароль"
           type="password"
           className={InputFieldStyle}
+          focusHandler={hideWarning}
         />
         <Button
           title="Войти в систему"
           className={btnStyles}
-          disable={isBtnDisabled}
+          disable={
+            isAnyErrors && isAnyErrors !== "Ошибка подключения к серверу"
+              ? true
+              : false
+          }
         />
         <Link className={LinkStyles} to="/registration">
           Зарегистрироваться
@@ -129,7 +124,7 @@ const LogIn = (props: any) => {
   );
 };
 
-const connectedForm = reduxForm<ILogInProps>({
+const connectedForm = reduxForm<ILogInValues>({
   form: "loginForm"
 })(LogIn);
 

@@ -3,9 +3,9 @@ export interface ILogInMutatonProps<> {
   password: any;
 }
 
-export interface ILogInMutation<User> {
+export interface ILogInMutation<IUser> {
   login: {
-    user: User;
+    user: IUser;
     token: string;
   };
 }

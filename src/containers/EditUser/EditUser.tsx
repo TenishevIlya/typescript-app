@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
-import { reduxForm, InjectedFormProps } from "redux-form";
+import { reduxForm, InjectedFormProps, getFormSyncErrors } from "redux-form";
 import classNames from "classnames";
 import { CHANGE_INITIAL_VALUE } from "../../store/actions/actions";
 
@@ -24,7 +24,7 @@ import {
   isEmailCorrect,
   comparePasswords,
   startsWithUpperCase
-} from "../../validators/validators";
+} from "../../utils/validators/validators";
 
 /* Mutations */
 import editUserMutation from "../../mutations/editUserMutation";
@@ -39,7 +39,7 @@ import currentUserQuery from "../../mutations/currentUserQuery";
 
 const EditUser: React.FC<InjectedFormProps<IEditUserValues> &
   IEditUserProps> = (props: any) => {
-  const { handleSubmit, CHANGE_INITIAL_VALUE } = props;
+  const { handleSubmit, CHANGE_INITIAL_VALUE, synchronousError, reset } = props;
 
   const { formStyles, formItem, headerPart } = EditFormStyles;
   const { InputFieldStyle, InputFieldEdit } = InputStyles;
@@ -51,10 +51,7 @@ const EditUser: React.FC<InjectedFormProps<IEditUserValues> &
   });
 
   const [edituser] = useMutation<TEditUserData<IUser>, TEditUserValues>(
-    editUserMutation,
-    {
-      fetchPolicy: "network-only"
-    }
+    editUserMutation
   );
 
   const editOnSubmit = (fields: any) => {
@@ -70,6 +67,7 @@ const EditUser: React.FC<InjectedFormProps<IEditUserValues> &
       })
         .then(data => {
           resolve(data);
+          reset();
         })
         .catch(e => {
           reject(e);
@@ -92,6 +90,7 @@ const EditUser: React.FC<InjectedFormProps<IEditUserValues> &
       <div className={headerPart}>
         <Header title={headerTitle} className={EditHeaderStyles} />
         <Button
+          disable={Object.keys(synchronousError).length !== 0 ? true : false}
           title="Сохранить"
           type="submit"
           form="data"
@@ -164,4 +163,9 @@ const connectedEdition = reduxForm<IEditUserValues, IEditUserProps>({
   keepDirtyOnReinitialize: true
 })(EditUser);
 
-export default connect(null, { CHANGE_INITIAL_VALUE })(connectedEdition);
+export default connect(
+  state => ({
+    synchronousError: getFormSyncErrors("editUserForm")(state)
+  }),
+  { CHANGE_INITIAL_VALUE }
+)(connectedEdition);

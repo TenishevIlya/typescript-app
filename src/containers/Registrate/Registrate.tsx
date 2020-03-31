@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import classNames from "classnames";
 import { CHANGE_INITIAL_VALUE } from "../../store/actions/actions";
+import { reduxForm, getFormSyncErrors, InjectedFormProps } from "redux-form";
 
 /* Components */
 import InputField from "../../components/InputComponent/Input";
@@ -21,11 +22,10 @@ import {
   registrateFormOnSubmitValidator,
   comparePasswords,
   startsWithUpperCase
-} from "../../validators/validators";
+} from "../../utils/validators/validators";
 
 /* Interfaces */
 import IRegistrateProps from "./Registrate.inteface";
-import { reduxForm } from "redux-form";
 import { useMutation } from "@apollo/react-hooks";
 import {
   ISignUpMutation,
@@ -40,8 +40,10 @@ import signupMutation from "../../mutations/signUpMutation";
 import loginMutation from "../../mutations/loginMutation";
 import { connect } from "react-redux";
 
-const Registrate = (props: any) => {
-  const { handleSubmit, CHANGE_INITIAL_VALUE } = props;
+const Registrate: React.FC<InjectedFormProps<IRegistrateProps>> = (
+  props: any
+) => {
+  const { handleSubmit, CHANGE_INITIAL_VALUE, synchronousError } = props;
 
   const [isAnyErrors, setError] = useState("");
   const history = useHistory();
@@ -90,6 +92,17 @@ const Registrate = (props: any) => {
           })
           .catch(error => {
             reject(setError(`${error.message}`));
+            switch (`${error.message}`) {
+              case "GraphQL error: Incorrect password":
+                reject(setError("Неправильный пароль"));
+                break;
+              case "GraphQL error: No user with that email":
+                reject(setError("Нет пользователя с этим email"));
+                break;
+              case "Network error: Failed to fetch":
+                reject(setError("Ошибка подключения к серверу"));
+                break;
+            }
           });
       });
     }
@@ -117,27 +130,31 @@ const Registrate = (props: any) => {
         validate={startsWithUpperCase}
       />
       <InputField
-        className={InputFieldStyle}
         name="registrateEmail"
+        className={InputFieldStyle}
         placeholder="Электронная почта"
         type="text"
         validate={[isEmailCorrect]}
       />
       <InputField
-        className={InputFieldStyle}
         name="registratePassword"
+        className={InputFieldStyle}
         placeholder="Введите пароль"
         type="password"
         passwordHandler={handlePasswordValidation}
       />
       <InputField
-        className={InputFieldStyle}
         name="registratePasswordRepeat"
+        className={InputFieldStyle}
         placeholder="Повторите пароль"
         type="password"
         validate={[comparePasswords]}
       />
-      <Button title="Применить и войти" className={btnStyles} />
+      <Button
+        disable={Object.keys(synchronousError).length !== 0 ? true : false}
+        title="Применить и войти"
+        className={btnStyles}
+      />
       <Link to="/" className={LinkStyles}>
         Уже зарегистрированны? Вход
       </Link>
@@ -152,6 +169,11 @@ const connectedRegistration = reduxForm<IRegistrateProps>({
   keepDirtyOnReinitialize: true
 })(Registrate);
 
-export default connect(null, {
-  CHANGE_INITIAL_VALUE
-})(connectedRegistration);
+export default connect(
+  state => ({
+    synchronousError: getFormSyncErrors("registration")(state)
+  }),
+  {
+    CHANGE_INITIAL_VALUE
+  }
+)(connectedRegistration);

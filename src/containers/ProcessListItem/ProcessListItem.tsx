@@ -55,7 +55,7 @@ const ProcessListItem: React.FC<IProcessListItemProps> = props => {
         </div>
         <div>
           <ProcessInfoPoint
-            header={`${props.employeesInvolvedProcess} сотрудников`}
+            header={`${props.employeesInvolvedProcess} сотрудников(-a)`}
             isTop={true}
             logo={Employees}
             explanation="учавствует в процессе"

@@ -31,6 +31,17 @@ const ProfileLayout: React.FC<IProfileLayoutProps> = () => {
   const [sidebarState, setSidebarState] = useState(false);
   const [layoutContent, setLayoutContent] = useState("SHOW_EDIT_PROFILE");
 
+  // const handleScroll
+
+  // maybe bad practise
+  // sidebarState
+  //   ? (document.body.style.overflow = "hidden")
+  //   : (document.body.style.overflow = "unset");
+
+  if (sidebarState) {
+    document.body.style.overflow = "hidden";
+  }
+
   // useEffect(() => {
   //   if (store.getState().hiddenSidebar === true) {
   //     setSidebarState(false);
@@ -58,6 +69,9 @@ const ProfileLayout: React.FC<IProfileLayoutProps> = () => {
     <div
       onClick={() => {
         handleLayoutContent();
+      }}
+      onWheel={() => {
+        document.body.style.overflow = "unset";
       }}
     >
       {sidebarState ? (

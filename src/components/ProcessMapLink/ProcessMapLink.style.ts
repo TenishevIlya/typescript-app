@@ -6,7 +6,14 @@ const ProcessMapLinkStyle = {
     alignItems: "center",
     marginLeft: "auto",
     marginRight: 0,
-    cursor: "pointer"
+    cursor: "pointer",
+
+    $nest: {
+      "&:hover": {
+        textDecoration: "underline",
+        textDecorationColor: "#6879BB"
+      }
+    }
   })
 };
 
