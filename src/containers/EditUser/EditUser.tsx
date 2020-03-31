@@ -77,12 +77,10 @@ const EditUser: React.FC<InjectedFormProps<IEditUserValues> &
       })
         .then(data => {
           resolve(data);
-          console.log(data);
           reset(); // to clear form after changes in profile
         })
         .catch(error => {
           reject(checkError(error, setError));
-          //reject(e);
         });
     });
   };

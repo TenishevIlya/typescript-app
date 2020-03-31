@@ -79,7 +79,6 @@ const Registrate: React.FC<InjectedFormProps<IRegistrateProps>> = (
         })
           .then(data => {
             resolve(data);
-            console.log(data);
           })
           .then(() => {
             logIn({
