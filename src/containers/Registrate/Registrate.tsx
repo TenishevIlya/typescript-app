@@ -88,13 +88,11 @@ const Registrate: React.FC<InjectedFormProps<IRegistrateProps>> = (
                 password: fields.registratePassword
               }
             }).then(data => {
-              console.log(data);
               localStorage.setItem("token", `${data.data?.login.token}`);
               history.push("/profile");
             });
           })
           .catch(error => {
-            console.log(error.message);
             reject(checkError(error, setError));
           });
       });

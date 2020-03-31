@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { reduxForm, InjectedFormProps, getFormSyncErrors } from "redux-form";
 import classNames from "classnames";
@@ -8,6 +8,7 @@ import InputField from "../../components/InputComponent/Input";
 import InputLabel from "../../components/InputLabel/InputLabel";
 import Header from "../../components/HeaderComponent/Header";
 import Button from "../../components/ButtonComponent/Button";
+import ErrorMessage from "../../components/ErrorMessageComponent/ErrorMessageComponent";
 
 /* Styles */
 import EditFormStyles from "./EditUser.style";
@@ -38,9 +39,12 @@ import currentUserQuery from "../../mutations/currentUserQuery";
 
 /* Store */
 import { CHANGE_INITIAL_VALUE } from "../../store/actions/actions";
+import { checkError } from "../../utils/formSupport/formSupportFunctions";
 
 const EditUser: React.FC<InjectedFormProps<IEditUserValues> &
   IEditUserProps> = (props: any) => {
+  const [isAnyErrors, setError] = useState("");
+
   const { handleSubmit, CHANGE_INITIAL_VALUE, synchronousError, reset } = props;
 
   const { formStyles, formItem, headerPart } = EditFormStyles;
@@ -76,8 +80,9 @@ const EditUser: React.FC<InjectedFormProps<IEditUserValues> &
           console.log(data);
           reset(); // to clear form after changes in profile
         })
-        .catch(e => {
-          reject(e);
+        .catch(error => {
+          reject(checkError(error, setError));
+          //reject(e);
         });
     });
   };
@@ -159,6 +164,11 @@ const EditUser: React.FC<InjectedFormProps<IEditUserValues> &
           ></InputField>
         </div>
       </form>
+      {/* not sure that it is needed but I added it to show
+      handling server errros */}
+      {isAnyErrors.length > 0 ? (
+        <ErrorMessage isEditError={true} message={isAnyErrors} />
+      ) : null}
     </>
   );
 };

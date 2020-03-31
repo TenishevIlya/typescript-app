@@ -57,9 +57,7 @@ const LogIn: React.FC<InjectedFormProps<ILogInValues>> = (props: any) => {
   const logInOnSubmit = (fields: any) => {
     if (loginFormOnSubmitValidator(fields) !== null) {
       setError("Есть незаполненные поля");
-      console.log(isAnyErrors);
     } else {
-      console.log(fields);
       setError("");
       return new Promise((resolve, reject) => {
         logIn({
@@ -74,7 +72,6 @@ const LogIn: React.FC<InjectedFormProps<ILogInValues>> = (props: any) => {
             history.push("/profile");
           })
           .catch(error => {
-            console.log(error.message);
             reject(checkError(error, setError));
           });
       });

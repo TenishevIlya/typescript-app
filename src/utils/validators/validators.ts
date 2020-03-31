@@ -5,7 +5,6 @@ import store from "../../store/index.store";
 
 // same logic of functions but i think it is better to separete then into different once
 export const loginFormOnSubmitValidator = (fields: any) => {
-  console.log(fields);
   if (fields.loginPassword === undefined || fields.loginEmail === undefined) {
     return "Есть незаполненные поля";
   } else {
