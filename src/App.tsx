@@ -28,7 +28,7 @@ const PrivateRouter = () => (
     exact={true}
     render={() => (
       <>
-        {localStorage.length !== 0 ? (
+        {localStorage.getItem("token") ? (
           <AuthorizedLayout>
             <AuthorizedRoute path="/profile" />
           </AuthorizedLayout>
