@@ -40,6 +40,9 @@ import signupMutation from "../../mutations/signUpMutation";
 import loginMutation from "../../mutations/loginMutation";
 import { connect } from "react-redux";
 
+/* Support functions */
+import { checkError } from "../../utils/formSupport/formSupportFunctions";
+
 const Registrate: React.FC<InjectedFormProps<IRegistrateProps>> = (
   props: any
 ) => {
@@ -91,18 +94,8 @@ const Registrate: React.FC<InjectedFormProps<IRegistrateProps>> = (
             });
           })
           .catch(error => {
-            reject(setError(`${error.message}`));
-            switch (`${error.message}`) {
-              case "GraphQL error: Incorrect password":
-                reject(setError("Неправильный пароль"));
-                break;
-              case "GraphQL error: No user with that email":
-                reject(setError("Нет пользователя с этим email"));
-                break;
-              case "Network error: Failed to fetch":
-                reject(setError("Ошибка подключения к серверу"));
-                break;
-            }
+            console.log(error.message);
+            reject(checkError(error, setError));
           });
       });
     }
@@ -110,6 +103,10 @@ const Registrate: React.FC<InjectedFormProps<IRegistrateProps>> = (
 
   const handlePasswordValidation = (e: any) => {
     CHANGE_INITIAL_VALUE(e.target.value);
+  };
+
+  const hideWarning = () => {
+    setError("");
   };
 
   return (
@@ -121,6 +118,7 @@ const Registrate: React.FC<InjectedFormProps<IRegistrateProps>> = (
         type="text"
         className={InputFieldStyle}
         validate={startsWithUpperCase}
+        focusHandler={hideWarning}
       />
       <InputField
         name="registrateSecondName"
@@ -128,6 +126,7 @@ const Registrate: React.FC<InjectedFormProps<IRegistrateProps>> = (
         placeholder="Фамилия"
         type="text"
         validate={startsWithUpperCase}
+        focusHandler={hideWarning}
       />
       <InputField
         name="registrateEmail"
@@ -135,6 +134,7 @@ const Registrate: React.FC<InjectedFormProps<IRegistrateProps>> = (
         placeholder="Электронная почта"
         type="text"
         validate={[isEmailCorrect]}
+        focusHandler={hideWarning}
       />
       <InputField
         name="registratePassword"
@@ -142,6 +142,7 @@ const Registrate: React.FC<InjectedFormProps<IRegistrateProps>> = (
         placeholder="Введите пароль"
         type="password"
         passwordHandler={handlePasswordValidation}
+        focusHandler={hideWarning}
       />
       <InputField
         name="registratePasswordRepeat"
@@ -149,9 +150,15 @@ const Registrate: React.FC<InjectedFormProps<IRegistrateProps>> = (
         placeholder="Повторите пароль"
         type="password"
         validate={[comparePasswords]}
+        focusHandler={hideWarning}
       />
       <Button
-        disable={Object.keys(synchronousError).length !== 0 ? true : false}
+        disable={
+          Object.keys(synchronousError).length !== 0 ||
+          isAnyErrors == "Пользователь с таким email уже существует"
+            ? true
+            : false
+        }
         title="Применить и войти"
         className={btnStyles}
       />

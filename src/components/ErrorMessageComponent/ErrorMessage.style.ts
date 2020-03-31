@@ -27,17 +27,8 @@ const ErrorMessageStyle = {
     padding: "36px 0 36px 0"
   }),
   logo: style({
-    border: "2px solid #EE4141",
-    boxSizing: "border-box",
-    borderRadius: "4px",
     marginLeft: "48px",
-    marginRight: "24px",
-    height: "48px",
-    width: "48px",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center"
+    marginRight: "24px"
   }),
   triangle: style({
     width: 0,

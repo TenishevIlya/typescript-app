@@ -30,8 +30,11 @@ import {
 } from "../../utils/validators/validators";
 
 /* Apollo */
-import { useMutation, useQuery } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/react-hooks";
 import loginMutation from "../../mutations/loginMutation";
+
+/* Support Functions */
+import { checkError } from "../../utils/formSupport/formSupportFunctions";
 
 const LogIn: React.FC<InjectedFormProps<ILogInValues>> = (props: any) => {
   const [isAnyErrors, setError] = useState("");
@@ -53,6 +56,7 @@ const LogIn: React.FC<InjectedFormProps<ILogInValues>> = (props: any) => {
       setError("Есть незаполненные поля");
       console.log(isAnyErrors);
     } else {
+      console.log(fields);
       setError("");
       return new Promise((resolve, reject) => {
         logIn({
@@ -68,17 +72,7 @@ const LogIn: React.FC<InjectedFormProps<ILogInValues>> = (props: any) => {
           })
           .catch(error => {
             console.log(error.message);
-            switch (`${error.message}`) {
-              case "GraphQL error: Incorrect password":
-                reject(setError("Неправильный пароль"));
-                break;
-              case "GraphQL error: No user with that email":
-                reject(setError("Нет пользователя с этим email"));
-                break;
-              case "Network error: Failed to fetch":
-                reject(setError("Ошибка подключения к серверу"));
-                break;
-            }
+            reject(checkError(error, setError));
           });
       });
     }

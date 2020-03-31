@@ -24,6 +24,7 @@ const Button: React.FC<IButton> = props => {
       disabled={props.disable}
       form={props.form}
       className={props.disable ? disabledBtnStyle : props.className}
+      onClick={props.action}
     >
       {props.title}
     </button>

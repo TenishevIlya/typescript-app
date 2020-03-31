@@ -15,6 +15,8 @@ export const convertTime = (value: string[]) => {
     const durationTime = moment.duration(Number(item));
     if (durationTime.hours() === 0) {
       return `${durationTime.minutes()} мин`;
+    } else if (durationTime.minutes() === 0) {
+      return `${durationTime.hours()}ч`;
     }
     return `${durationTime.hours()}ч ${durationTime.minutes()} мин`;
   });

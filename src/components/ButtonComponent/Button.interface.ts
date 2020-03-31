@@ -4,4 +4,5 @@ export default interface IButton {
   type?: any;
   className?: string;
   form?: string;
+  action?(): void;
 }

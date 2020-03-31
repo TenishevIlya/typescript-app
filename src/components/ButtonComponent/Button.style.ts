@@ -24,13 +24,6 @@ const ButtonStyles = {
         background: "#FFC40C",
         boxShadow: "inset 0px 0px 10px rgba(0, 0, 0, 0.12)"
       }
-      // "&:focus": {
-      //   background: "#FFCE0C",
-      //   border: "1px solid #FFFBEA",
-      //   boxSizing: "border-box",
-      //   boxShadow: "0px 1px 10px #FFD73B",
-      //   borderRadius: "4px"
-      // }
     }
   }),
   bigBtn: style({
@@ -48,12 +41,12 @@ const ButtonStyles = {
       "&:hover": {
         background: "#FFCE0C",
         boxShadow: "0px 0px 0px"
+      },
+      "&:active": {
+        background: "#FFC40C",
+        boxShadow: "inset 0px 0px 10px rgba(0, 0, 0, 0.12)"
       }
     }
-  }),
-  pressedBtn: style({
-    background: "#FFC40C",
-    boxShadow: "inset 0px 0px 10px rgba(0, 0, 0, 0.12)"
   }),
   disabledBtn: style({
     background: "#FFCE0C",

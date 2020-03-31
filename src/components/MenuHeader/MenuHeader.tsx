@@ -4,11 +4,7 @@ import classNames from "classnames";
 /* Components */
 import Header from "../HeaderComponent/Header";
 
-/* Img */
-import MenuLogo from "../../img/menu.svg";
-
 /* Styles */
-import ProfileLayoutStyles from "../../layouts/Profile/Profile.style";
 import MenuHeaderStyles from "./MenuHeader.style";
 
 /* Interfaces */

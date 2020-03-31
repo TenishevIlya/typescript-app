@@ -6,15 +6,15 @@ export default interface IInputProps {
   type?: string;
   input?: any;
   meta?: any;
-  bntHandler?(): any;
-  passwordHandler?(e: any): any;
-  focusHandler?(): any;
+  //bntHandler?(): any;
+  passwordHandler?(e: any): void;
+  focusHandler?(): void;
 }
 
-interface IInputField extends Partial<WrappedFieldProps> {
-  placeholder?: string;
-  type?: "text" | "password";
-  className?: Object;
-  btnHandler?(): any;
-  passwordHandler?(e: any): any;
-}
+// interface IInputField extends Partial<WrappedFieldProps> {
+//   placeholder?: string;
+//   type?: "text" | "password";
+//   className?: Object;
+//   btnHandler?(): any;
+//   passwordHandler?(e: any): any;
+// }

@@ -4,6 +4,7 @@
 import store from "../../store/index.store";
 
 export const loginFormOnSubmitValidator = (fields: any) => {
+  console.log(fields);
   if (fields.loginPassword === undefined || fields.loginEmail === undefined) {
     return "Есть незаполненные поля";
   } else {

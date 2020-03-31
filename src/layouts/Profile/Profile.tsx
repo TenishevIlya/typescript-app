@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import classnames from "classnames";
 
 /* Contaiers */
@@ -25,30 +25,25 @@ import currentUserQuery from "../../mutations/currentUserQuery";
 
 /* Store */
 import store from "../../store/index.store";
-import { HIDE_SIDEBAR } from "../../store/actions/actions";
+
+/* Support functions */
+import {
+  handleScrollStop,
+  handleScrollActive
+} from "../../utils/scrollCase/scrollCase";
 
 const ProfileLayout: React.FC<IProfileLayoutProps> = () => {
   const [sidebarState, setSidebarState] = useState(false);
   const [layoutContent, setLayoutContent] = useState("SHOW_EDIT_PROFILE");
 
-  // const handleScroll
-
-  // maybe bad practise
-  // sidebarState
-  //   ? (document.body.style.overflow = "hidden")
-  //   : (document.body.style.overflow = "unset");
-
   if (sidebarState) {
     document.body.style.overflow = "hidden";
   }
 
-  // useEffect(() => {
-  //   if (store.getState().hiddenSidebar === true) {
-  //     setSidebarState(false);
-  //   }
-  // });
+  // timer for hideScroll case
+  // not sure if it is a goog practise
+  let timer: any;
 
-  //think about it
   const handleLayoutContent = () => {
     if (store.getState().setEditLayout === "SHOW_PROCESS_LIST") {
       setLayoutContent("SHOW_PROCESS_LIST");
@@ -71,7 +66,13 @@ const ProfileLayout: React.FC<IProfileLayoutProps> = () => {
         handleLayoutContent();
       }}
       onWheel={() => {
-        document.body.style.overflow = "unset";
+        if (sidebarState) {
+          document.body.style.overflow = "hidden";
+        } else {
+          document.body.style.overflow = "unset";
+          clearTimeout(timer);
+          timer = setTimeout(handleScrollStop, 1500);
+        }
       }}
     >
       {sidebarState ? (
