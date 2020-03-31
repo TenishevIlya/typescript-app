@@ -1,7 +1,7 @@
 interface IMenuHeaderProps {
   icon: string;
   currentTitleClass: string;
-  action?(): any;
+  action?(): void;
   title: string;
 }
 

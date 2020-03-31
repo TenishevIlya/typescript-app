@@ -23,10 +23,12 @@ const ProcessContainer: React.FC = () => {
   return (
     <div className={ProcessListStyle}>
       {data?.processList.map((process: any) => {
+        //get correct time
         const convertedTime = convertTime([
           process.averageLeadTime,
           process.averageActiveTime
         ]);
+        //get correct dates
         const convertedDates = convertDates([
           process.start,
           process.end,

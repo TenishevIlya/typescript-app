@@ -3,6 +3,7 @@
 // maximum update depth exceeded error
 import store from "../../store/index.store";
 
+// same logic of functions but i think it is better to separete then into different once
 export const loginFormOnSubmitValidator = (fields: any) => {
   console.log(fields);
   if (fields.loginPassword === undefined || fields.loginEmail === undefined) {
@@ -12,6 +13,7 @@ export const loginFormOnSubmitValidator = (fields: any) => {
   }
 };
 
+// same logic of functions but i think it is better to separete then into different once
 export const registrateFormOnSubmitValidator = (fields: any) => {
   if (
     fields.registrateName === undefined ||
@@ -26,6 +28,7 @@ export const registrateFormOnSubmitValidator = (fields: any) => {
   }
 };
 
+// upperCase starting letter
 export const startsWithUpperCase = (value?: string) => {
   const upperCaseStartingLetter = value?.[0].toUpperCase();
   if (value?.[0] === upperCaseStartingLetter) {
@@ -44,12 +47,6 @@ export const isEmailCorrect = (value: string) => {
   } else {
     return "Неправильный формат электронной почты";
   }
-};
-
-export const inputLength = (len: number) => (value: string) => {
-  return value?.length < len
-    ? `Поле должно содержать ${len} и более символов`
-    : null;
 };
 
 export const comparePasswords = (value: string) => {

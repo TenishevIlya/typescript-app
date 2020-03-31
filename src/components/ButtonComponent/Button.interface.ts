@@ -1,8 +1,8 @@
 export default interface IButton {
   title: string;
-  disable?: boolean;
   type?: any;
-  className?: string;
+  className: string;
+  disable?: boolean;
   form?: string;
   action?(): void;
 }

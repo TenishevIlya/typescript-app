@@ -3,9 +3,6 @@ import React from "react";
 /* Style */
 import ErrorMessageStyle from "./ErrorMessage.style";
 
-/* Img */
-import AttentionLogo from "../../img/attention.svg";
-
 /* Interfaces */
 import { IErrorMessageProps } from "./ErrorMessage.interface";
 
@@ -29,8 +26,6 @@ const ErrorMessageComponent: React.FC<IErrorMessageProps> = props => {
           />
         </svg>
       </div>
-      {/* <img src={AttentionLogo} className={logo} /> */}
-      {/* <div className={triangle}></div> */}
       <span className={message}>{props.message}</span>
     </div>
   );

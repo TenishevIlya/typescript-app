@@ -27,7 +27,7 @@ const ProcessInfoPoint: React.FC<IProcessInfoPoint> = props => {
   return (
     <div className={props.isTop ? topBlockStyle : commonPoint}>
       <div className={logoAndHeader}>
-        <img src={props.logo} className={logoStyle}></img>
+        <img src={props.logo} className={logoStyle} alt="Info point logo" />
         <Header title={props.header} className={infoPointHeader} />
       </div>
       <span className={captionStyle}>{props.explanation}</span>

@@ -16,7 +16,6 @@ import MenuLogo from "../../img/menu.svg";
 import ProfileLayoutStyles from "./Profile.style";
 
 /* Interfaces */
-import IProfileLayoutProps from "./Profile.inteface";
 import { ICurrentUser } from "../../mutations/mutation.type";
 
 /* Queries */
@@ -27,12 +26,9 @@ import currentUserQuery from "../../mutations/currentUserQuery";
 import store from "../../store/index.store";
 
 /* Support functions */
-import {
-  handleScrollStop,
-  handleScrollActive
-} from "../../utils/scrollCase/scrollCase";
+import { handleScrollStop } from "../../utils/scrollCase/scrollCase";
 
-const ProfileLayout: React.FC<IProfileLayoutProps> = () => {
+const ProfileLayout: React.FC = () => {
   const [sidebarState, setSidebarState] = useState(false);
   const [layoutContent, setLayoutContent] = useState("SHOW_EDIT_PROFILE");
 
@@ -52,7 +48,7 @@ const ProfileLayout: React.FC<IProfileLayoutProps> = () => {
     }
   };
 
-  const { loading, data, error } = useQuery<ICurrentUser>(currentUserQuery, {
+  const { data } = useQuery<ICurrentUser>(currentUserQuery, {
     fetchPolicy: "network-only"
   });
 
@@ -66,6 +62,8 @@ const ProfileLayout: React.FC<IProfileLayoutProps> = () => {
         handleLayoutContent();
       }}
       onWheel={() => {
+        // tried to put it into handleScrollActive
+        // but works incorrectly, so it stays here
         if (sidebarState) {
           document.body.style.overflow = "hidden";
         } else {
@@ -94,9 +92,6 @@ const ProfileLayout: React.FC<IProfileLayoutProps> = () => {
           layoutContent === "SHOW_EDIT_PROFILE" ? editLayoutStyle : main
         }
       >
-        {/* {store.getState().setEditLayout === "SHOW_EDIT_PROFILE" ? (
-          <EditUser />
-        ) : null} */}
         {layoutContent === "SHOW_EDIT_PROFILE" ? <EditUser /> : <ProcessList />}
       </div>
     </div>

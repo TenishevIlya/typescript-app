@@ -2,7 +2,7 @@ import { style } from "typestyle";
 
 const SidebarStyles = {
   common: style({
-    position: "absolute",
+    position: "fixed",
     zIndex: 5,
     width: "100%",
     height: "100%",

@@ -41,10 +41,6 @@ const InputStyles = {
   }),
   InputTextLabel: style({
     display: "block"
-    //height: "52px"
-  }),
-  InputFieldEdit: style({
-    //marginLeft: "285px",
   })
 };
 

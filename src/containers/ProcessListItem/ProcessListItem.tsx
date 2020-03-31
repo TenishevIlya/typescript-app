@@ -3,7 +3,6 @@ import classnames from "classnames";
 
 /* Components */
 import Header from "../../components/HeaderComponent/Header";
-import ProcesMapLink from "../../components/ProcessMapLink/ProcessMapLink";
 import ProcessInfoPoint from "../../components/ProcessInfoPoint/ProcessInfoPoint";
 import ProcessDate from "../../components/ProcessDate/ProcessDate";
 
@@ -29,10 +28,12 @@ const ProcessListItem: React.FC<IProcessListItemProps> = props => {
 
   return (
     <div className={commonItem}>
+      {/* Header */}
       <div className={header}>
         <Header title={props.name} className={headerTitleStyle} />
         <ProcessMapLink />
       </div>
+      {/* Main content part */}
       <div className={mainPart}>
         <ProcessInfoPoint
           header={props.numberOfExecutions}

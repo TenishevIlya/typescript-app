@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from "react";
+import React from "react";
 import "./index.css";
 import { BrowserRouter, Route } from "react-router-dom";
 import UnAuthorizedRoute from "./components/Routes/UnAuthorized/UnAuthorizedRoute";

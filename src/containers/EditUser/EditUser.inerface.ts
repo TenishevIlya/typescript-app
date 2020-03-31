@@ -1,5 +1,3 @@
-import { InjectedFormProps } from "redux-form";
-
 export interface IEditUserValues {
   editName: string;
   editSecondName: string;

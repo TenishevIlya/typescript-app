@@ -1,6 +1,6 @@
-import React, { useState, Fragment } from "react";
-import { Field, change } from "redux-form";
-import { BaseFieldProps, WrappedFieldProps } from "redux-form";
+import React, { useState } from "react";
+import { Field } from "redux-form";
+import { BaseFieldProps } from "redux-form";
 
 /* Img */
 import InVisibleEye from "../../img/invisible.svg";
@@ -17,14 +17,9 @@ import IInputField from "./Input.interface";
 
 const Input: React.FC<IInputProps> = props => {
   const [visibility, setVisibility] = useState(false);
-  const [isUnActivePassword, setUnActivePassword] = useState(false);
 
   const changeVisibility = () => {
     setVisibility(!visibility);
-  };
-
-  const handlePasswordActivity = () => {
-    setUnActivePassword(!isUnActivePassword);
   };
 
   const {
@@ -58,10 +53,11 @@ const Input: React.FC<IInputProps> = props => {
             onBlur={props.passwordHandler}
             onClick={props.focusHandler}
           />
-          <img // think about component
+          <img
             src={visibility ? VisibleEye : InVisibleEye}
             className={HideOrShowStyles}
             onClick={changeVisibility}
+            alt="Hide eye"
           />
         </div>
         {active & invalid ? (

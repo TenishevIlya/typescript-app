@@ -101,10 +101,16 @@ const Registrate: React.FC<InjectedFormProps<IRegistrateProps>> = (
     }
   };
 
+  // looking for passwords to be the same
+  // i don't put this function into another file
+  // because if i do, it doesn't work synchronously
   const handlePasswordValidation = (e: any) => {
     CHANGE_INITIAL_VALUE(e.target.value);
   };
 
+  // to hide errors when validation fails
+  // don't put this func into another file
+  // beacuse then i can't add it to form field correctly
   const hideWarning = () => {
     setError("");
   };
@@ -155,7 +161,7 @@ const Registrate: React.FC<InjectedFormProps<IRegistrateProps>> = (
       <Button
         disable={
           Object.keys(synchronousError).length !== 0 ||
-          isAnyErrors == "Пользователь с таким email уже существует"
+          isAnyErrors === "Пользователь с таким email уже существует"
             ? true
             : false
         }

@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import { reduxForm, InjectedFormProps, getFormSyncErrors } from "redux-form";
 import classNames from "classnames";
-import { CHANGE_INITIAL_VALUE } from "../../store/actions/actions";
 
 /* Components */
 import InputField from "../../components/InputComponent/Input";
@@ -37,14 +36,21 @@ import {
 } from "../../mutations/mutation.type";
 import currentUserQuery from "../../mutations/currentUserQuery";
 
+/* Store */
+import { CHANGE_INITIAL_VALUE } from "../../store/actions/actions";
+
 const EditUser: React.FC<InjectedFormProps<IEditUserValues> &
   IEditUserProps> = (props: any) => {
   const { handleSubmit, CHANGE_INITIAL_VALUE, synchronousError, reset } = props;
 
   const { formStyles, formItem, headerPart } = EditFormStyles;
-  const { InputFieldStyle, InputFieldEdit } = InputStyles;
+  const { InputFieldStyle } = InputStyles;
   const { common, editUserHeader } = HeaderStyles;
   const { commonStyles, smallBtn } = ButtonStyles;
+
+  const EditHeaderStyles = classNames(common, editUserHeader);
+  const EditFieldStyle = classNames(InputFieldStyle);
+  const EditBtnStyle = classNames(commonStyles, smallBtn);
 
   const { data } = useQuery<ICurrentUser>(currentUserQuery, {
     fetchPolicy: "network-only"
@@ -67,7 +73,8 @@ const EditUser: React.FC<InjectedFormProps<IEditUserValues> &
       })
         .then(data => {
           resolve(data);
-          reset();
+          console.log(data);
+          reset(); // to clear form after changes in profile
         })
         .catch(e => {
           reject(e);
@@ -75,12 +82,11 @@ const EditUser: React.FC<InjectedFormProps<IEditUserValues> &
     });
   };
 
-  const EditHeaderStyles = classNames(common, editUserHeader);
-  const EditFieldStyle = classNames(InputFieldStyle, InputFieldEdit);
-  const EditBtnStyle = classNames(commonStyles, smallBtn);
-
   const headerTitle = `${data?.currentUser.secondName} ${data?.currentUser.firstName}. Редактирование`;
 
+  // looking for passwords to be the same
+  // i don't put this function into another file
+  // because if i do, it doesn't work synchronously
   const handlePasswordValidation = (e: any) => {
     CHANGE_INITIAL_VALUE(e.target.value);
   };
@@ -164,6 +170,7 @@ const connectedEdition = reduxForm<IEditUserValues, IEditUserProps>({
 })(EditUser);
 
 export default connect(
+  // get sync erros to validate if button disabled or not
   state => ({
     synchronousError: getFormSyncErrors("editUserForm")(state)
   }),

@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import classnames from "classnames";
 
 /* Components */
@@ -21,7 +20,7 @@ const ProcessMapLink: React.FC = () => {
   return (
     <div className={commonLink}>
       <Header title="На карту процессов" className={linkHeaderStyle} />
-      <img src={LinkLogo}></img>
+      <img src={LinkLogo} alt="Map arrow" />
     </div>
   );
 };

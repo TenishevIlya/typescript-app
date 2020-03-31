@@ -29,41 +29,6 @@ const ErrorMessageStyle = {
   logo: style({
     marginLeft: "48px",
     marginRight: "24px"
-  }),
-  triangle: style({
-    width: 0,
-    height: 0,
-    borderLeft: "50px solid transparent",
-    borderRight: "50px solid transparent",
-    borderBottom: "100px solid red",
-    position: "relative",
-
-    $nest: {
-      "&::after": {
-        content: ``,
-        position: "absolute",
-        top: "5px",
-        left: "-45px",
-        width: 0,
-        height: 0,
-        borderLeft: "45px solid transparent",
-        borderRight: "45px solid transparent",
-        borderBottom: "92px solid white"
-      }
-    }
-  }),
-  oval: style({
-    background: "#EE4141",
-    borderRadius: "20px",
-    width: "4px",
-    height: "17px"
-  }),
-  circle: style({
-    width: "4px",
-    height: "4px",
-    background: "#EE4141",
-    marginTop: "2px",
-    borderRadius: "50%"
   })
 };
 

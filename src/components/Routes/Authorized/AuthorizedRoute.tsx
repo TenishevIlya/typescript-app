@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, useLocation } from "react-router-dom";
+import { Route } from "react-router-dom";
 
 /* Interface */
 import IAuthorizedRoute from "./AuthorizedRoute.interface";

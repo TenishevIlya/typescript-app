@@ -1,15 +1,10 @@
 import { createStore } from "redux";
 import { combineReducers } from "redux";
-import {
-  getInitialValue,
-  setProfileLayout,
-  hideSidebar
-} from "./index.reducer";
+import { getInitialValue, setProfileLayout } from "./index.reducer";
 import { reducer as FormReducer } from "redux-form";
 import { composeWithDevTools } from "redux-devtools-extension";
 
 const reducer = combineReducers({
-  hiddenSidebar: hideSidebar,
   setEditLayout: setProfileLayout,
   getValue: getInitialValue,
   form: FormReducer

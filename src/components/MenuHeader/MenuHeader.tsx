@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import classNames from "classnames";
+import React from "react";
 
 /* Components */
 import Header from "../HeaderComponent/Header";
@@ -15,7 +14,7 @@ const MenuHeader: React.FC<IMenuHeaderProps> = props => {
 
   return (
     <div className={common} onClick={props.action}>
-      <img src={props.icon} className={icon} />
+      <img src={props.icon} className={icon} alt="Header logo" />
       <Header title={props.title} className={props.currentTitleClass} />
     </div>
   );

@@ -1,5 +1,5 @@
 export interface IProcessInfoPoint {
-  logo: any;
+  logo: string;
   explanation: string;
   header: number | string;
   isTop?: boolean;

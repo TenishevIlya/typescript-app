@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import classnames from "classnames";
 
 /* Interfaces */
@@ -8,9 +8,7 @@ import IButton from "./Button.interface";
 import ButtonStyles from "./Button.style";
 
 const Button: React.FC<IButton> = props => {
-  const [aсcsess, setAccess] = useState("active");
-
-  const { commonStyles, bigBtn, disabledBtn } = ButtonStyles;
+  const { commonStyles, disabledBtn } = ButtonStyles;
 
   const disabledBtnStyle = classnames(
     commonStyles,

@@ -47,6 +47,9 @@ const LogIn: React.FC<InjectedFormProps<ILogInValues>> = (props: any) => {
   const { commonStyles, bigBtn } = ButtonStyles;
   const btnStyles = classNames(commonStyles, bigBtn);
 
+  // to hide errors when validation fails
+  // don't put this func into another file
+  // beacuse then i can't add it to form field correctly
   const hideWarning = () => {
     setError("");
   };

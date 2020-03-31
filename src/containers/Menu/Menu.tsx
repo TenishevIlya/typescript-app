@@ -38,12 +38,12 @@ const Menu: React.FC<IMenuProps> = props => {
       <MenuItem
         title={`${data?.currentUser.secondName} ${data?.currentUser.firstName}`}
         icon={UserIcon}
-        reducerAction="SHOW_EDIT_PROFILE"
+        reducerAction="SHOW_EDIT_PROFILE" // action forn changing profile layout content
       />
       <MenuItem
         title="Список процессов"
         icon={ProcessListLogo}
-        reducerAction="SHOW_PROCESS_LIST"
+        reducerAction="SHOW_PROCESS_LIST" // action forn changing profile layout content
       />
       <Button
         title="Выйти"

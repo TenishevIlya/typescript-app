@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 /* Img */
 import Logo from "../../img/proceset_logo.svg";
@@ -6,19 +6,12 @@ import Logo from "../../img/proceset_logo.svg";
 /* Styles */
 import UnAuthorizedLayoutStyles from "./UnAuthorized.style";
 
-/* Interfaces */
-import IUnAuthorizedLayoutProps from "./UnAuthorized.interface";
-
 const { layoutBackground, logo, formContainer } = UnAuthorizedLayoutStyles;
 
-const UnAuthorizedLayout: React.FC<IUnAuthorizedLayoutProps> = ({
-  children
-}) => {
-  //const [currentUrl, setUrl] = useState("/"); //temorarily because we need redux
-
+const UnAuthorizedLayout: React.FC = ({ children }) => {
   return (
     <div className={layoutBackground}>
-      <img src={Logo} className={logo} />
+      <img src={Logo} className={logo} alt="Proceset" />
       <div className={formContainer}>{children}</div>
     </div>
   );

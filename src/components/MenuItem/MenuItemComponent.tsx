@@ -1,7 +1,7 @@
 import React from "react";
 
 /* Interface */
-import IMenuItem from "./IMenuItem";
+import IMenuItem from "./MenuItem.interface";
 
 /* Style */
 import MenuItemStyle from "./MenuItem.style";
@@ -18,7 +18,7 @@ const MenuItem: React.FC<IMenuItem> = props => {
         store.dispatch(CHANGE_PROFILE_CHILDREN(props.reducerAction))
       }
     >
-      <img src={props.icon} className={iconLogo} />
+      <img src={props.icon} className={iconLogo} alt="Menu point logo" />
       <span className={itemTitleStyle}>{props.title}</span>
     </div>
   );
