@@ -50,7 +50,7 @@ const ProcessListItem: React.FC<IProcessListItemProps> = props => {
           />
           <ProcessInfoPoint
             // added static percentages
-            header={`${props.averageActiveTime} (10.5%)`}
+            header={`${props.averageActiveTime} (22,04%)`}
             logo={AverageActiveTime}
             explanation="среднее активное время"
           />
