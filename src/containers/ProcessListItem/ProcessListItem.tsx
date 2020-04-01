@@ -21,6 +21,9 @@ import AverageActiveTime from "../../img/averageActiveTime.svg";
 import Employees from "../../img/employees.svg";
 import Scenarios from "../../img/scenarios.svg";
 
+/* ConvertationFuncs */
+import { setRandomPercentage } from "../../utils/dataConvertation/dataConvertation";
+
 const ProcessListItem: React.FC<IProcessListItemProps> = props => {
   const { commonItem, header, mainPart } = ProcessListItemStyle;
   const { common, processListItemHeader } = HeaderStyles;
@@ -49,20 +52,20 @@ const ProcessListItem: React.FC<IProcessListItemProps> = props => {
             explanation="среднее время выполнения"
           />
           <ProcessInfoPoint
-            header={props.averageActiveTime}
+            header={`${props.averageActiveTime} (${setRandomPercentage()}%)`}
             logo={AverageActiveTime}
             explanation="среднее активное время"
           />
         </div>
         <div>
           <ProcessInfoPoint
-            header={`${props.employeesInvolvedProcess} сотрудников(-a)`}
+            header={`${props.employeesInvolvedProcess} сотрудни${props.employeesDec}`}
             isTop={true}
             logo={Employees}
             explanation="учавствует в процессе"
           />
           <ProcessInfoPoint
-            header={`${props.numberOfScenarios} сценариев`}
+            header={`${props.numberOfScenarios} сценари${props.scenariosDec}`}
             logo={Scenarios}
             explanation="в процессе"
           />

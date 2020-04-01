@@ -62,14 +62,14 @@ const ProfileLayout: React.FC = () => {
         handleLayoutContent();
       }}
       onWheel={() => {
-        // tried to put it into handleScrollActive
+        // tried to put it into handleScrollActive func
         // but works incorrectly, so it stays here
         if (sidebarState) {
           document.body.style.overflow = "hidden";
         } else {
           document.body.style.overflow = "unset";
           clearTimeout(timer);
-          timer = setTimeout(handleScrollStop, 1500);
+          timer = setTimeout(handleScrollStop, 2000);
         }
       }}
     >

@@ -36,3 +36,20 @@ export const convertDates = (value: number[]) => {
     return `${currentDay} ${currentRusMonth} ${currentYear}`;
   });
 };
+
+export const correctDeclension = (value: number, type: string) => {
+  if (value % 10 === 1) {
+    const ending = type === "scenario" ? "й" : "к";
+    return ending;
+  } else if (value % 10 === 2 || value % 10 === 3 || value % 10 === 4) {
+    const ending = type === "scenario" ? "я" : "ка";
+    return ending;
+  } else {
+    const ending = type === "scenario" ? "ев" : "ков";
+    return ending;
+  }
+};
+
+export const setRandomPercentage = () => {
+  return Math.floor(0 + Math.random() * (20 + 1 - 0));
+};

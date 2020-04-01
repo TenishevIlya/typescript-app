@@ -9,4 +9,6 @@ export interface IProcessListItemProps {
   start: string;
   end: string;
   loading: string;
+  scenariosDec: string;
+  employeesDec: string;
 }

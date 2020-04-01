@@ -162,7 +162,7 @@ const EditUser: React.FC<InjectedFormProps<IEditUserValues> &
           ></InputField>
         </div>
       </form>
-      {/* not sure that it is needed but I added it to show
+      {/* not sure if it is needed but I added it to show
       handling server errros */}
       {isAnyErrors.length > 0 ? (
         <ErrorMessage isEditError={true} message={isAnyErrors} />

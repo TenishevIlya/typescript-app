@@ -14,7 +14,8 @@ import processListQuery from "../../mutations/processListQuery";
 /* ConvertationFuncs */
 import {
   convertTime,
-  convertDates
+  convertDates,
+  correctDeclension
 } from "../../utils/dataConvertation/dataConvertation";
 
 const ProcessContainer: React.FC = () => {
@@ -23,6 +24,16 @@ const ProcessContainer: React.FC = () => {
   return (
     <div className={ProcessListStyle}>
       {data?.processList.map((process: any) => {
+        // employees correct declision
+        const correctedEmpDec = correctDeclension(
+          process.employeesInvolvedProcess,
+          "employee"
+        );
+        // scenarios correct declision
+        const correctedScenDec = correctDeclension(
+          process.numberOfScenarios,
+          "scenario"
+        );
         //get correct time
         const convertedTime = convertTime([
           process.averageLeadTime,
@@ -36,6 +47,8 @@ const ProcessContainer: React.FC = () => {
         ]);
         return (
           <ProcessListItem
+            employeesDec={correctedEmpDec}
+            scenariosDec={correctedScenDec}
             key={process.id + process.name}
             id={process.id}
             name={process.name}
