@@ -49,7 +49,3 @@ export const correctDeclension = (value: number, type: string) => {
     return ending;
   }
 };
-
-export const setRandomPercentage = () => {
-  return Math.floor(0 + Math.random() * (20 + 1 - 0));
-};
